@@ -1,0 +1,14 @@
+{
+    "name": "aleksandrdremov/daim",
+    "description": "PHP database active interactions module",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "aleksandrdremov",
+            "email": "dremov.me@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
