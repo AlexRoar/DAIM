@@ -11,5 +11,9 @@ namespace DAIM\Core;
 
 class BasicTable
 {
+    public function __construct()
+    {
+
+    }
 
 }
