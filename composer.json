@@ -10,5 +10,13 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^7"
+    },
+    "autoload": {
+        "psr-0": {
+            "DAIM": "src/"
+        }
+    }
 }
