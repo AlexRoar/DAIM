@@ -6,9 +6,10 @@
  * Contact me: dremov.me@gmail.com
  */
 
-namespace DAIM\Exceptions;
+namespace DAIM\Core;
 
 
-class ConnectionException extends CustomException
+class QueryResult
 {
+
 }

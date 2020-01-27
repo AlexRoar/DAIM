@@ -9,11 +9,7 @@
 namespace DAIM\Core;
 
 
-class BasicTable
+class QueryBuilder
 {
-    public function __construct()
-    {
-
-    }
 
 }

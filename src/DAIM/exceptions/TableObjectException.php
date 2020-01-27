@@ -9,6 +9,7 @@
 namespace DAIM\Exceptions;
 
 
-class ConnectionException extends CustomException
+class TableObjectException extends CustomException
 {
+
 }

@@ -6,9 +6,9 @@
  * Contact me: dremov.me@gmail.com
  */
 
-namespace DAIM\core;
+namespace DAIM\Core;
 
-use DAIM\exceptions\ConnectionException;
+use DAIM\Exceptions\ConnectionException;
 use DAIM\Exceptions\CredentialsException;
 use Exception;
 use mysqli;
@@ -21,10 +21,13 @@ abstract class Connection
 {
     /**
      * Contains connection object or null if not initialized
-     * @var null|mysqli
+     * @var array
      */
     private static $connections = array(
-        'default' => null
+        'default' => array(
+            'connection' => null,
+            'credentials' => null
+        )
     );
 
     /**
@@ -35,7 +38,7 @@ abstract class Connection
      */
     public static function getConnection($mode = 'default'): mysqli
     {
-        $connection = self::$connections[$mode];
+        $connection = self::$connections[$mode]['connection'];
         if (is_null($connection))
             self::initConnection($mode);
         if (!$connection instanceof mysqli) {
@@ -57,12 +60,12 @@ abstract class Connection
     public static function initConnection($mode = 'default'): void
     {
         try {
-            self::$connections[$mode] = new mysqli(Credentials::getHost($mode),
-                Credentials::getUsername($mode),
-                Credentials::getPasswd($mode),
-                Credentials::getDbname($mode),
-                Credentials::getPort($mode),
-                Credentials::getSocket($mode));
+            self::$connections[$mode]['connection'] = new mysqli(self::$connections[$mode]['credentials']->getHost($mode),
+                self::$connections[$mode]['credentials']->getUsername($mode),
+                self::$connections[$mode]['credentials']->getPassword($mode),
+                self::$connections[$mode]['credentials']->getDbname($mode),
+                self::$connections[$mode]['credentials']->getPort($mode),
+                self::$connections[$mode]['credentials']->getSocket($mode));
         } catch (Exception $exception) {
             throw new ConnectionException($exception->getMessage());
         }
@@ -75,8 +78,8 @@ abstract class Connection
     public static function closeConnection($mode = 'default'): void
     {
         self::checkAndThrowModeError($mode);
-        if (!is_null(self::$connections[$mode]))
-            self::$connections[$mode]->close();
+        if (!is_null(self::$connections[$mode]['connection']))
+            self::$connections[$mode]['connection']->close();
     }
 
     /**
@@ -105,7 +108,34 @@ abstract class Connection
     public static function clear($mode = 'default')
     {
         self::checkAndThrowModeError($mode);
-        self::$connections[$mode] = null;
+        self::$connections[$mode] = array(
+            'connection' => null,
+            'credentials' => null
+        );
+    }
+
+    public static function createNewMode($mode)
+    {
+        if (self::isModeExists($mode))
+            throw new CredentialsException("Mode already defined");
+        else {
+            self::$connections[$mode] = array(
+                'connection' => null,
+                'credentials' => null
+            );
+        }
+    }
+
+    public static function setCredentials(Credentials $credentials, $mode = 'default')
+    {
+        self::checkAndThrowModeError();
+        self::$connections[$mode]['credentials'] = $credentials;
+    }
+
+    public static function getCredentials($mode = 'default')
+    {
+        self::checkAndThrowModeError();
+        return self::$connections[$mode]['credentials'];
     }
 
     /**
@@ -115,15 +145,22 @@ abstract class Connection
     {
         if (!self::isModeExists($mode))
             return false;
-        if (self::$connections[$mode] == null)
+        if (self::$connections[$mode]['connection'] == null)
             return false;
-        if (!self::$connections[$mode] instanceof mysqli) {
+        if (!self::$connections[$mode]['connection'] instanceof mysqli or !self::$connections[$mode]['credentials'] instanceof Credentials) {
             return false;
         } else {
-            if (!self::$connections[$mode]->connect_errno and self::$connections[$mode]->ping()) {
-                return true;
+            if (self::$connections[$mode]['connection']->connect_errno) {
+                return false;
             }
+            try {
+                if (!self::$connections[$mode]['connection']->ping()) {
+                    return false;
+                }
+            } catch (Exception $exception) {
+                return false;
+            }
+            return true;
         }
-        return false;
     }
 }
