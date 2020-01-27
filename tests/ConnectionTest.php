@@ -20,9 +20,13 @@ class ConnectionTest extends TestCase
 {
 
     private $host = '127.0.0.1';
+
     private $username = 'root';
+
     private $Dbname = 'daim';
+
     private $password = 'qwerty123';
+
     private $port = 8889;
 
     /**
