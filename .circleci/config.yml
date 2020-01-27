@@ -6,8 +6,6 @@ version: 2
 jobs:
   test:
     docker:
-      - store_test_results:
-          path: test-results
       # Specify the version you desire here
       - image: circleci/php:7.3-node-browsers
       - image: circleci/mysql:5.7-ram
@@ -28,6 +26,8 @@ jobs:
 
     steps:
       - checkout
+      - store_test_results:
+          path: test-results
       - run:
           # Our primary container isn't MYSQL so run a sleep command until it's ready.
           name: Waiting for MySQL to be ready
