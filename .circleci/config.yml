@@ -3,6 +3,10 @@
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
 version: 2
+references:
+  ## Workspaces
+  workspace: &workspace
+               ~/src
 jobs:
   build:
     docker:
@@ -11,6 +15,10 @@ jobs:
       - image: circleci/mysql:5.7-ram
         environment:
           - MYSQL_ROOT_PASSWORD=qwerty123
+          - MYSQL_DATABASE=daim
+          - MYSQL_USER=root
+          - MYSQL_ROOT_HOST=%
+          - MYSQL_HOST=127.0.0.1
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
