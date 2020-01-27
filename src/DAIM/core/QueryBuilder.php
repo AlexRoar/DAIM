@@ -11,5 +11,20 @@ namespace DAIM\Core;
 
 class QueryBuilder
 {
+    private $path = [];
+
+    private $expected = [];
+
+    private $mainTable = null;
+
+    public function __construct()
+    {
+
+    }
+
+    public function setMainTable($tableName)
+    {
+        $this->mainTable = $tableName;
+    }
 
 }

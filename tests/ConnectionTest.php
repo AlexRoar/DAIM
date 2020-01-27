@@ -41,7 +41,6 @@ class ConnectionTest extends TestCase
         $cred->setPassword($this->password);
         $cred->setPort($this->port);
         Connection::setCredentials($cred);
-        Connection::initConnection();
         $this->assertTrue(Connection::getConnection() instanceof mysqli);
     }
 

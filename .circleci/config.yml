@@ -45,7 +45,7 @@ jobs:
             mysql -h 127.0.0.1 -u root -pqwerty123 --execute="SELECT * FROM daim.Persons"
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
-      - run: sudo docker-php-ext-install mysqli
+      - run: sudo docker-php-ext-install mysqli json
       #      - run: sudo apt-get install mysql-client
 
       # Download and cache dependencies
@@ -64,6 +64,6 @@ jobs:
             - ./vendor
 
       # prepare the database
-#      - run: mysqladmin create daim --user="root" --password="qwerty123" --host="127.0.0.1" --port=8889
+      #      - run: mysqladmin create daim --user="root" --password="qwerty123" --host="127.0.0.1" --port=8889
 
       - run: composer run-script test

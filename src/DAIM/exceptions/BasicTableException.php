@@ -6,13 +6,10 @@
  * Contact me: dremov.me@gmail.com
  */
 
-namespace DAIM\Syntax;
+namespace DAIM\Exceptions;
 
 
-class MySQL
+class BasicTableException extends CustomException
 {
-    public function __construct()
-    {
-        $data = json_decode(file_get_contents(get_class($this) . '.json'));
-    }
+
 }

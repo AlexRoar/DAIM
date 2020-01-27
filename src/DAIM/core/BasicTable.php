@@ -9,10 +9,13 @@
 namespace DAIM\Core;
 
 
+use DAIM\Exceptions\BasicTableException;
 use DAIM\Exceptions\TableObjectException;
 
 class BasicTable
 {
+    protected $tableName = null;
+
     public function __construct($mode = 'default')
     {
         if (!Connection::isModeExists($mode))
@@ -24,6 +27,12 @@ class BasicTable
     public function startQuery()
     {
         $queryObject = new QueryBuilder();
+        if (is_null($this->tableName)) {
+            throw new BasicTableException("
+            Can't construct new QueryBuilder on unspecified table in BasicTable class!
+             Use BasicTable only for extensions.");
+        }
+        $queryObject->setMainTable($this->tableName);
         return $queryObject;
     }
 }

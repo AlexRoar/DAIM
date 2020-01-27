@@ -6,7 +6,7 @@
  * Contact me: dremov.me@gmail.com
  */
 
-namespace DAIM\syntax\SQLEntities;
+namespace DAIM\Syntax\SQLEntities;
 
 
 class ColumnNames implements BasicEntity
