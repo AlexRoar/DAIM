@@ -13,7 +13,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: qwerty123
           MYSQL_DATABASE: daim
           MYSQL_USER: user
-          MYSQL_ROOT_HOST: %
+          MYSQL_ROOT_HOST: 127.0.0.1
           MYSQL_HOST: 127.0.0.1
 
       # Specify service dependencies here if necessary
@@ -42,7 +42,7 @@ jobs:
           command: |
             sudo apt-get install default-mysql-client
             mysql -h 127.0.0.1 -u root -pqwerty1234 daim < sql-data/dummy.sql
-            mysql -h 127.0.0.1 -u root -pqwerty1234 --execute="SELECT * FROM test_db.Persons"
+            mysql -h 127.0.0.1 -u root -pqwerty1234 --execute="SELECT * FROM daim.Persons"
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install mysqli
