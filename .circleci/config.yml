@@ -6,6 +6,8 @@ version: 2
 jobs:
   test:
     docker:
+      - store_test_results:
+          path: test-results
       # Specify the version you desire here
       - image: circleci/php:7.3-node-browsers
       - image: circleci/mysql:5.7-ram
