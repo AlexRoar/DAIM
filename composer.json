@@ -29,7 +29,7 @@
             "DAIM\\Exceptions\\": "src/exceptions",
             "DAIM\\Generators\\": "src/generators",
             "DAIM\\Syntax\\": "src/syntax",
-            "DAIM\\Syntax\\SQLEntities": "src/syntax/SQLEntities"
+            "DAIM\\Syntax\\SQLEntities\\": "src/syntax/SQLEntities"
         }
     },
     "scripts": {

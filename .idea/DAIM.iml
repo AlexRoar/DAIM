@@ -9,7 +9,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/generators" isTestSource="true" packagePrefix="DAIM\Generators\" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/core" isTestSource="true" packagePrefix="DAIM\Core\" />
-      <sourceFolder url="file://$MODULE_DIR$/src/syntax/SQLEntities" isTestSource="true" packagePrefix="DAIM\Syntax\SQLEntities" />
+      <sourceFolder url="file://$MODULE_DIR$/src/syntax/SQLEntities" isTestSource="true" packagePrefix="DAIM\Syntax\SQLEntities\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />
