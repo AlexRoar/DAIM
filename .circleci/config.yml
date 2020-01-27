@@ -67,7 +67,7 @@ jobs:
           shell: /bin/bash
           command: |
             mkdir -p test-results
-            composer run-script test --log-junit ~/test-results/junit.xml tests
+            vendor/bin/phpunit --log-junit ~/test-results/junit.xml tests
             echo "done"
           when: always
       - store_test_results:
