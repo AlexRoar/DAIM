@@ -33,7 +33,8 @@ Connection::initConnection();
    
 Connection::getConnection(); # returns active MySQL connection (instance of mysqli class);
 
-# To set up a second connection (maybe to the second database), you can create additional connection mode:
+# To set up a second connection (maybe to the second database),
+# you can create additional connection mode:
 
 /**
  * Set up $cred2 as instance of Credentials class for the second connection
