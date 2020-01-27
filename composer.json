@@ -25,11 +25,12 @@
     "autoload-dev": {
         "psr-4": {
             "DAIM\\": "src/",
-            "DAIM\\Core\\": "src/core",
-            "DAIM\\Exceptions\\": "src/exceptions",
-            "DAIM\\Generators\\": "src/generators",
-            "DAIM\\Syntax\\": "src/syntax",
-            "DAIM\\Syntax\\SQLEntities\\": "src/syntax/SQLEntities"
+            "DAIM\\Core\\": "src/DAIM/core",
+            "DAIM\\Exceptions\\": "src/DAIM/exceptions",
+            "DAIM\\Generators\\": "src/DAIM/generators",
+            "DAIM\\Syntax\\": "src/DAIM/syntax",
+            "DAIM\\Syntax\\SQLEntities\\": "src/DAIM/syntax/SQLEntities",
+            "DAIM\\Tables\\": "src/DAIM/tables"
         }
     },
     "scripts": {
