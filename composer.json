@@ -1,40 +1,50 @@
 {
-    "name": "aleksandrdremov/daim",
-    "description": "PHP database active interactions module",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "aleksandrdremov",
-            "email": "dremov.me@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {
-        "ext-mysqli": "*",
-        "ext-json": "*"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^7",
-        "ext-mysqli": "*"
-    },
-    "autoload": {
-        "psr-0": {
-            "DAIM": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "DAIM\\": "src/",
-            "DAIM\\Core\\": "src/DAIM/core",
-            "DAIM\\Exceptions\\": "src/DAIM/exceptions",
-            "DAIM\\Generators\\": "src/DAIM/generators",
-            "DAIM\\Syntax\\": "src/DAIM/syntax",
-            "DAIM\\Syntax\\SQLEntities\\": "src/DAIM/syntax/SQLEntities",
-            "DAIM\\Tables\\": "src/DAIM/tables"
-        }
-    },
-    "scripts": {
-        "test": "phpunit"
+  "name": "aleksandrdremov/daim",
+  "description": "Lightweight and efficient MySQL PHP requests framework",
+  "type": "library",
+  "keywords": [
+    "MySQL",
+    "MySQL PHP",
+    "PHP",
+    "queries",
+    "requests"
+  ],
+  "homepage": "https://github.com/AlexRoar/DAIM",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Aleksandr Dremov",
+      "email": "dremov.me@gmail.com",
+      "role": "Developer"
     }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "ext-mysqli": "*",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "php": ">=7.1",
+    "phpunit/phpunit": "^7",
+    "ext-mysqli": "*"
+  },
+  "autoload": {
+    "psr-0": {
+      "DAIM": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "DAIM\\": "src/",
+      "DAIM\\Core\\": "src/DAIM/core",
+      "DAIM\\Exceptions\\": "src/DAIM/exceptions",
+      "DAIM\\Generators\\": "src/DAIM/generators",
+      "DAIM\\Syntax\\": "src/DAIM/syntax",
+      "DAIM\\Syntax\\SQLEntities\\": "src/DAIM/syntax/SQLEntities",
+      "DAIM\\Tables\\": "src/DAIM/tables"
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  }
 }
