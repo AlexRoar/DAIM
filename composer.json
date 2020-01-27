@@ -22,6 +22,16 @@
             "DAIM": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "DAIM": "src/",
+            "DAIM\\Core\\": "src/core",
+            "DAIM\\Exceptions\\": "src/exceptions",
+            "DAIM\\Generators\\": "src/generators",
+            "DAIM\\Syntax\\": "src/syntax",
+            "DAIM\\Syntax\\SQLEntities": "src/syntax/SQLEntities"
+        }
+    },
     "scripts": {
         "test": "phpunit"
     }

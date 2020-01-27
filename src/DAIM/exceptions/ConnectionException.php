@@ -11,4 +11,5 @@ namespace DAIM\Exceptions;
 
 class ConnectionException extends CustomException
 {
+
 }
