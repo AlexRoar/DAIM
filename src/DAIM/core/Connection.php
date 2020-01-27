@@ -32,9 +32,9 @@ abstract class Connection
 
     /**
      *
+     * @param string $mode
      * @return mysqli
      * @throws ConnectionException
-     * @throws CredentialsException
      */
     public static function getConnection($mode = 'default'): mysqli
     {
@@ -57,6 +57,7 @@ abstract class Connection
     }
 
     /**
+     * @param string $mode
      * @throws ConnectionException
      */
     public static function initConnection($mode = 'default'): void
@@ -75,6 +76,7 @@ abstract class Connection
 
     /**
      *
+     * @param string $mode
      * @throws CredentialsException
      */
     public static function closeConnection($mode = 'default'): void
@@ -105,6 +107,7 @@ abstract class Connection
 
     /**
      *
+     * @param string $mode
      * @throws CredentialsException
      */
     public static function clear($mode = 'default')
@@ -116,6 +119,10 @@ abstract class Connection
         );
     }
 
+    /**
+     * @param $mode
+     * @throws CredentialsException
+     */
     public static function createNewMode($mode)
     {
         if (self::isModeExists($mode))
@@ -128,12 +135,22 @@ abstract class Connection
         }
     }
 
+    /**
+     * @param Credentials $credentials
+     * @param string $mode
+     * @throws CredentialsException
+     */
     public static function setCredentials(Credentials $credentials, $mode = 'default')
     {
         self::checkAndThrowModeError();
         self::$connections[$mode]['credentials'] = $credentials;
     }
 
+    /**
+     * @param string $mode
+     * @return mixed
+     * @throws CredentialsException
+     */
     public static function getCredentials($mode = 'default')
     {
         self::checkAndThrowModeError();
@@ -141,7 +158,8 @@ abstract class Connection
     }
 
     /**
-     *
+     * @param string $mode
+     * @return bool
      */
     public static function isInitiated($mode = 'default'): bool
     {

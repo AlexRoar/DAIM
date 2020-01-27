@@ -1,11 +1,9 @@
-<?php
-/**
+<?php /**
  * Copyright (c) 2020.
  * Designed and developed by Aleksandr Dremov
  * Use according to the license guidelines.
  * Contact me: dremov.me@gmail.com
- */
-
+ */ /** @noinspection PhpUnhandledExceptionInspection */
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use DAIM\Core\Connection;

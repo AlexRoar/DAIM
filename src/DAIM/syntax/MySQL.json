@@ -62,92 +62,92 @@
         "from": "../*"
       },
       "count": {
-        "{{paranthesis}}": {
+        "{{parenthesis}}": {
           "*": {
-            "{{end_paranthesis}}": {
+            "{{end_parenthesis}}": {
               "from": "../*"
             }
           },
           "distinct": {
             "{{column_name}}": {
-              "{{end_paranthesis}}": {
+              "{{end_parenthesis}}": {
                 "from": "../*"
               }
             }
           },
           "all": {
             "{{column_name}}": {
-              "{{end_paranthesis}}": {
+              "{{end_parenthesis}}": {
                 "from": "../*"
               }
             }
           },
           "{{column_name}}": {
-            "{{end_paranthesis}}": {
+            "{{end_parenthesis}}": {
               "from": "../*"
             }
           }
         }
       },
       "sum": {
-        "{{paranthesis}}": {
+        "{{parenthesis}}": {
           "distinct": {
             "{{column_name}}": {
-              "{{end_paranthesis}}": {
+              "{{end_parenthesis}}": {
                 "from": "../*"
               }
             }
           },
           "{{column_name}}": {
-            "{{end_paranthesis}}": {
+            "{{end_parenthesis}}": {
               "from": "../*"
             }
           }
         }
       },
       "avg": {
-        "{{paranthesis}}": {
+        "{{parenthesis}}": {
           "distinct": {
             "{{column_name}}": {
-              "{{end_paranthesis}}": {
+              "{{end_parenthesis}}": {
                 "from": "../*"
               }
             }
           },
           "{{column_name}}": {
-            "{{end_paranthesis}}": {
+            "{{end_parenthesis}}": {
               "from": "../*"
             }
           }
         }
       },
       "max": {
-        "{{paranthesis}}": {
+        "{{parenthesis}}": {
           "distinct": {
             "{{column_name}}": {
-              "{{end_paranthesis}}": {
+              "{{end_parenthesis}}": {
                 "from": "../*"
               }
             }
           },
           "{{column_name}}": {
-            "{{end_paranthesis}}": {
+            "{{end_parenthesis}}": {
               "from": "../*"
             }
           }
         }
       },
       "min": {
-        "{{paranthesis}}": {
+        "{{parenthesis}}": {
           "distinct": {
             "{{column_name}}": {
-              "{{end_paranthesis}}": {
+              "{{end_parenthesis}}": {
                 "from": "../*"
               }
             }
           },
           "{{column_name}}": {
-            "{{end_paranthesis}}": {
+            "{{end_parenthesis}}": {
               "from": "../*"
             }
           }

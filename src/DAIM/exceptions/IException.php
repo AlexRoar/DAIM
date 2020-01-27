@@ -22,11 +22,11 @@ interface IException
 
     public function getLine();                   // An array of the backtrace()
 
-    public function getTrace();           // Formated string of trace
+    public function getTrace();           // Formatted string of trace
 
     /* Overrideable methods inherited from Exception class */
 
-    public function getTraceAsString();                 // formated string for display
+    public function getTraceAsString();                 // formatted string for display
 
     public function __toString();
 }

@@ -7,7 +7,6 @@
  */
 
 use DAIM\Core\Credentials;
-use DAIM\Exceptions\CredentialsException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 class CredentialsTest extends TestCase
 {
     /**
-     * @throws CredentialsException
      */
     public function testBasicCredentialsSetup()
     {
@@ -38,7 +36,6 @@ class CredentialsTest extends TestCase
 
     /**
      *
-     * @throws CredentialsException
      */
     public function testSecondCredentialsSetup()
     {
