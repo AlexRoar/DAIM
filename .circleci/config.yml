@@ -63,17 +63,11 @@ jobs:
           paths:
             - ./vendor
 
-      - run:
-          shell: /bin/bash
-          command: |
-            mkdir -p test-results
-            vendor/bin/phpunit --log-junit ~/test-results/junit.xml tests
-            echo "done"
-          when: always
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: test-results
+      # prepare the database
+      #      - run: mysqladmin create daim --user="root" --password="qwerty123" --host="127.0.0.1" --port=8889
+
+      - run: composer run-script test
+
 workflows:
   version: 2
   test:

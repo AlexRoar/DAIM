@@ -12,10 +12,22 @@ namespace DAIM\Core;
 use DAIM\Exceptions\BasicTableException;
 use DAIM\Exceptions\TableObjectException;
 
+/**
+ * Class BasicTable
+ * @package DAIM\Core
+ */
 class BasicTable
 {
+    /**
+     * @var null|string
+     */
     protected $tableName = null;
 
+    /**
+     * BasicTable constructor.
+     * @param string $mode
+     * @throws TableObjectException
+     */
     public function __construct($mode = 'default')
     {
         if (!Connection::isModeExists($mode))
@@ -24,6 +36,10 @@ class BasicTable
             throw new TableObjectException('Connection mode ' . $mode . ' is not initiated!');
     }
 
+    /**
+     * @return QueryBuilder
+     * @throws BasicTableException
+     */
     public function startQuery()
     {
         $queryObject = new QueryBuilder();
