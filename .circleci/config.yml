@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  test:
     docker:
       # Specify the version you desire here
       - image: circleci/php:7.3-node-browsers
@@ -67,3 +67,8 @@ jobs:
       #      - run: mysqladmin create daim --user="root" --password="qwerty123" --host="127.0.0.1" --port=8889
 
       - run: composer run-script test
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - test

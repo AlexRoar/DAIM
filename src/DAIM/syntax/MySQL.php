@@ -15,4 +15,9 @@ class MySQL
     {
         $data = json_decode(file_get_contents(get_class($this) . '.json'));
     }
+
+    public function getExpected($path)
+    {
+
+    }
 }
