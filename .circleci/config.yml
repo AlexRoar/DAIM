@@ -41,8 +41,8 @@ jobs:
           name: Install MySQL CLI; Import dummy data; run an example query
           command: |
             sudo apt-get install default-mysql-client
-            mysql -h 127.0.0.1 -u root -pqwerty1234 daim < sql-data/dummy.sql
-            mysql -h 127.0.0.1 -u root -pqwerty1234 --execute="SELECT * FROM daim.Persons"
+            mysql -h 127.0.0.1 -u root -pqwerty123 daim < sql-data/dummy.sql
+            mysql -h 127.0.0.1 -u root -pqwerty123 --execute="SELECT * FROM daim.Persons"
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install mysqli
