@@ -45,4 +45,4 @@ jobs:
       # prepare the database
 #      - run: mysqladmin create daim --user="root" --password="qwerty123" --host="127.0.0.1" --port=8889
 
-      - run: ./vendor/bin/phpunit
+      - run: composer run-script test
