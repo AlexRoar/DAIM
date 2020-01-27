@@ -14,14 +14,25 @@ use PHPUnit\Framework\TestCase;
 
 class BasicTableTest extends TestCase
 {
+
+    private $host = '127.0.0.1';
+
+    private $username = 'test';
+
+    private $Dbname = 'daim';
+
+    private $password = 'qwerty123';
+
+    private $port = 3306;
+
     public function setUp()
     {
         $cred = new Credentials();
-        $cred->setHost('127.0.0.1');
-        $cred->setUsername('root');
-        $cred->setDbname('daim');
-        $cred->setPassword('qwerty123');
-        $cred->setPort(8889);
+        $cred->setHost($this->host);
+        $cred->setUsername($this->username);
+        $cred->setDbname($this->Dbname);
+        $cred->setPassword($this->password);
+        $cred->setPort($this->port);
         Connection::setCredentials($cred);
         Connection::initConnection();
     }

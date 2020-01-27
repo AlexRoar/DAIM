@@ -3,10 +3,6 @@
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
 version: 2
-references:
-  ## Workspaces
-  workspace: &workspace
-               ~/src
 jobs:
   build:
     docker:
@@ -14,11 +10,11 @@ jobs:
       - image: circleci/php:7.3-node-browsers
       - image: circleci/mysql:5.7-ram
         environment:
-          - MYSQL_ROOT_PASSWORD=qwerty123
-          - MYSQL_DATABASE=daim
-          - MYSQL_USER=root
-          - MYSQL_ROOT_HOST=%
-          - MYSQL_HOST=127.0.0.1
+          MYSQL_ROOT_PASSWORD: qwerty123
+          MYSQL_DATABASE: daim
+          MYSQL_USER: user
+          MYSQL_ROOT_HOST: %
+          MYSQL_HOST: 127.0.0.1
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -30,6 +26,23 @@ jobs:
 
     steps:
       - checkout
+      - run:
+          # Our primary container isn't MYSQL so run a sleep command until it's ready.
+          name: Waiting for MySQL to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
+          name: Install MySQL CLI; Import dummy data; run an example query
+          command: |
+            sudo apt-get install default-mysql-client
+            mysql -h 127.0.0.1 -u root -pqwerty1234 daim < sql-data/dummy.sql
+            mysql -h 127.0.0.1 -u root -pqwerty1234 --execute="SELECT * FROM test_db.Persons"
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install mysqli

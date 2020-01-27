@@ -39,10 +39,12 @@ abstract class Connection
     public static function getConnection($mode = 'default'): mysqli
     {
         $connection = self::$connections[$mode]['connection'];
-        if (is_null($connection))
+        if (is_null($connection)) {
             self::initConnection($mode);
+            $connection = self::$connections[$mode]['connection'];
+        }
         if (!$connection instanceof mysqli) {
-            throw new ConnectionException("Connection object is not instance of mysqli class");
+            throw new ConnectionException("Connection object is not instance of mysqli class :" . get_class($connection));
         } else {
             if ($connection->connect_errno) {
                 throw new ConnectionException("Connection to DB failed", $connection->connect_error);

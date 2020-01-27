@@ -21,13 +21,13 @@ class ConnectionTest extends TestCase
 
     private $host = '127.0.0.1';
 
-    private $username = 'root';
+    private $username = 'test';
 
     private $Dbname = 'daim';
 
     private $password = 'qwerty123';
 
-    private $port = 8889;
+    private $port = 3306;
 
     /**
      *
@@ -37,10 +37,11 @@ class ConnectionTest extends TestCase
         $cred = new Credentials();
         $cred->setHost($this->host);
         $cred->setUsername($this->username);
-        $cred->setDbname('daim');
+        $cred->setDbname($this->Dbname);
         $cred->setPassword($this->password);
         $cred->setPort($this->port);
         Connection::setCredentials($cred);
+        Connection::initConnection();
         $this->assertTrue(Connection::getConnection() instanceof mysqli);
     }
 
@@ -51,7 +52,7 @@ class ConnectionTest extends TestCase
         $cred->setUsername($this->username);
         $cred->setDbname($this->Dbname);
         $cred->setPassword($this->password);
-        $cred->setPort(8889);
+        $cred->setPort($this->port);
         Connection::setCredentials($cred);
         $this->assertTrue(Connection::getCredentials() instanceof Credentials);
     }
@@ -67,7 +68,7 @@ class ConnectionTest extends TestCase
         $cred->setUsername($this->username . '_wrong_suffix'); # wrong
         $cred->setDbname($this->Dbname);
         $cred->setPassword($this->password . '_wrong_suffix'); # wrong
-        $cred->setPort(8889);
+        $cred->setPort($this->port);
         Connection::setCredentials($cred);
         DAIM\core\Connection::initConnection();
     }
