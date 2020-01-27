@@ -22,11 +22,12 @@ use DAIM\Core\Connection;
 use DAIM\Core\Credentials;
     
 $cred = new Credentials();
-$cred->setHost($this->host);
-$cred->setUsername($this->username);
-$cred->setDbname($this->Dbname);
-$cred->setPassword($this->password);
-$cred->setPort($this->port);
+$cred->setHost(host);
+$cred->setUsername(username);
+$cred->setDbname(DBname);
+$cred->setPassword(password);
+$cred->setPort(port);
+
 Connection::setCredentials($cred);
 Connection::initConnection();
    
@@ -35,7 +36,7 @@ Connection::getConnection(); # returns active MySQL connection (instance of mysq
 # To set up a second connection (maybe to the second database), you can create additional connection mode:
 
 /**
-* Set up $cred2 as instance of Credentials class for the second connection
+ * Set up $cred2 as instance of Credentials class for the second connection
  * @var $cred2 Credentials;
  */
 
