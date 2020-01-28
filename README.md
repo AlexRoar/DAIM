@@ -14,6 +14,13 @@ The framework is designed to minimize usage of SQL code in interactions between 
 - Keeps connections to multiple databases organized.
 - Automatic prevention of SQL-injections.
 
+## Installation
+
+Just use [composer](https://getcomposer.org).
+```bash
+composer require alexdremov/daim
+```
+
 ## Beta: what's ready?
 
 You can use it for keeping your Database connection
