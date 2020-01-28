@@ -5,10 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="DAIM\" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
-<<<<<<< HEAD
       <sourceFolder url="file://$MODULE_DIR$/src/DAIM/Syntax/SQLEntities" isTestSource="true" packagePrefix="DAIM\Syntax\SQLEntities\" />
-=======
->>>>>>> gh-pages
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />
