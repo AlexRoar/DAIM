@@ -6,7 +6,7 @@
 
 The framework is designed to minimize usage of SQL code in interactions between MySQL server and PHP scripts and to bind PHP object alterations with DB alterations.
 
-## Why it is gorgeous
+## Why it is gorgeous?
 
 - Database reactive tables models. You change PHP model — Database changes automatically.
 - Generates PHP classes according to existing tables, helps your IDE with suggestions.
