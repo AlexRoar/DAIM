@@ -1,4 +1,4 @@
-name: PHP Composer
+name: PHPUnit tests
 
 on: [push]
 
@@ -10,8 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate
     - name: Setup MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
@@ -34,8 +32,14 @@ jobs:
         # MYSQL_PASSWORD - specified superuser password which user is power for created database
         mysql password: qwerty123 # optional, default is 
 
+    - name: Update lock file
+      run: composer update
+      
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer install --prefer-dist 
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
