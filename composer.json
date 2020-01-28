@@ -32,23 +32,23 @@
   "autoload": {
     "psr-4": {
       "DAIM\\": "src/",
-      "DAIM\\Core\\": "src/DAIM/core",
-      "DAIM\\Exceptions\\": "src/DAIM/exceptions",
-      "DAIM\\Generators\\": "src/DAIM/generators",
-      "DAIM\\Syntax\\": "src/DAIM/syntax",
-      "DAIM\\Syntax\\SQLEntities\\": "src/DAIM/syntax/SQLEntities",
-      "DAIM\\Tables\\": "src/DAIM/tables"
+      "DAIM\\Core\\": "src/DAIM/Core",
+      "DAIM\\Exceptions\\": "src/DAIM/Exceptions",
+      "DAIM\\Generators\\": "src/DAIM/Generators",
+      "DAIM\\Syntax\\": "src/DAIM/Syntax",
+      "DAIM\\Syntax\\SQLEntities\\": "src/DAIM/Syntax/SQLEntities",
+      "DAIM\\Tables\\": "src/DAIM/Tables"
     }
   },
   "autoload-dev": {
     "psr-4": {
       "DAIM\\": "src/",
-      "DAIM\\Core\\": "src/DAIM/core",
-      "DAIM\\Exceptions\\": "src/DAIM/exceptions",
-      "DAIM\\Generators\\": "src/DAIM/generators",
-      "DAIM\\Syntax\\": "src/DAIM/syntax",
-      "DAIM\\Syntax\\SQLEntities\\": "src/DAIM/syntax/SQLEntities",
-      "DAIM\\Tables\\": "src/DAIM/tables"
+      "DAIM\\Core\\": "src/DAIM/Core",
+      "DAIM\\Exceptions\\": "src/DAIM/Exceptions",
+      "DAIM\\Generators\\": "src/DAIM/Generators",
+      "DAIM\\Syntax\\": "src/DAIM/Syntax",
+      "DAIM\\Syntax\\SQLEntities\\": "src/DAIM/Syntax/SQLEntities",
+      "DAIM\\Tables\\": "src/DAIM/Tables"
     }
   },
   "scripts": {
