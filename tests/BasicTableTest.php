@@ -3,7 +3,12 @@
  * Designed and developed by Aleksandr Dremov
  * Use according to the license guidelines.
  * Contact me: dremov.me@gmail.com
+<<<<<<< HEAD
  */ /** @noinspection PhpUnhandledExceptionInspection */
+=======
+ */
+/** @noinspection PhpUnhandledExceptionInspection */
+>>>>>>> gh-pages
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use DAIM\Core\Connection;
