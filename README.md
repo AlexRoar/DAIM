@@ -4,7 +4,7 @@
 ![](https://img.shields.io/github/repo-size/AlexRoar/DAIM)
 ![](https://img.shields.io/github/last-commit/AlexRoar/DAIM)
 
-This framework is designed to minimize usage of SQL code in interactions between MySQL server and PHP scripts.
+The framework is designed to minimize usage of SQL code in interactions between MySQL server and PHP scripts and to bind PHP object alterations with DB alterations.
 
 ## Why it is gorgeous
 
