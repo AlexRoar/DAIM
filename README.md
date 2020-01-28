@@ -51,5 +51,7 @@ Connection::getConnection(); # returns active MySQL connection (instance of mysq
 Connection::setCredentials($cred2, "secondConnectionName");
 Connection::initConnection("secondConnectionName");
     
-Connection::getConnection("secondConnectionName");
+Connection::getConnection("secondConnectionName")->query('SELECT * FROM `Persons` WHERE 1');
 ```
+
+Such limited library usage is due to the beta status of the project.
