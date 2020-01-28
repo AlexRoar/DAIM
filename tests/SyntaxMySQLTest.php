@@ -7,6 +7,8 @@
  */
 
 use DAIM\Core\QueryPath;
+use DAIM\Exceptions\MySQLSyntaxException;
+use DAIM\Exceptions\QueryPathException;
 use DAIM\Syntax\MySQL;
 use PHPUnit\Framework\TestCase;
 
@@ -28,14 +30,14 @@ class SyntaxMySQLTest extends TestCase
 
         $MySQL = new MySQL();
         $this->assertEquals(
-            $method->invokeArgs($MySQL, ['../', ['insert', 'into', '{{table_name}}', '{{column_names}}']]),
-            ['insert', 'into', '{{table_name}}']);
+            array_keys($method->invokeArgs($MySQL, ['../', ['insert', 'into', '{{table_name}}', '{{column_names}}']])),
+            ['values', '{{column_names}}']);
         $this->assertEquals(
-            $method->invokeArgs($MySQL, ['..', ['insert', 'into', '{{table_name}}', '{{column_names}}']]),
-            ['insert', 'into', '{{table_name}}']);
+            array_keys($method->invokeArgs($MySQL, ['..', ['insert', 'into', '{{table_name}}', '{{column_names}}']])),
+            ['values', '{{column_names}}']);
         $this->assertEquals(
             $method->invokeArgs($MySQL, ['../../values/{{values_group}}', ['insert', 'into', '{{table_name}}', '{{column_names}}', 'values']]),
-            ['insert', 'into', '{{table_name}}', 'values', '{{values_group}}']);
+            '{{query_end}}');
     }
 
     /**
@@ -50,6 +52,61 @@ class SyntaxMySQLTest extends TestCase
         $MySQL = new MySQL();
 
         $path = new QueryPath();
-        $this->assertTrue(true);
+        $path->addPathStep('select', '');
+        $path->addPathStep('*', '');
+        $this->assertEquals(
+            $method->invokeArgs($MySQL, [$path]), ['from']);
+
+        $path->addPathStep('from', '');
+        $path->addPathStep('{{table_name_group}}', '');
+        $path->addPathStep('where', '');
+        $this->assertEquals(
+            $method->invokeArgs($MySQL, [$path]), ['{{conditions}}']);
+    }
+
+    /**
+     * @expectedException  QueryPathException
+     * @depends testNextStepsRetrieve
+     * @throws MySQLSyntaxException
+     * @throws ReflectionException
+     */
+    public function testNextStepsRetrieveWithUnregisteredWay()
+    {
+        $method = new ReflectionMethod('DAIM\Syntax\MySQL', 'iteratePathAndGetNextSteps');
+        $method->setAccessible(true);
+
+        $MySQL = new MySQL();
+
+        $path = new QueryPath();
+        $path->addPathStep('select', '');
+        $path->addPathStep('unregistered_WAY', '');
+        $method->invokeArgs($MySQL, [$path]);
+    }
+
+    public function testComplicatedPathExpectedValues()
+    {
+        $method = new ReflectionMethod('DAIM\Syntax\MySQL', 'iteratePathAndGetNextSteps');
+        $method->setAccessible(true);
+        $MySQL = new MySQL();
+
+        $path = new QueryPath();
+        $path->addPathStep('insert', '');
+        $path->addPathStep('into', '');
+        $path->addPathStep('{{table_name}}', '');
+        $path->addPathStep('{{column_names}}', '');
+        $this->assertEquals(
+            $method->invokeArgs($MySQL, [$path]),
+            ['values', 'select']);
+
+        $path->addPathStep('values', '');
+        $this->assertEquals(
+            $method->invokeArgs($MySQL, [$path]),
+            ['{{values_group}}']);
+
+        $path->popPathStep();
+        $path->addPathStep('select', '');
+        $this->assertEquals(
+            $method->invokeArgs($MySQL, [$path]),
+            ['*', 'all', '{{column_names}}', 'count', 'sum', 'avg', 'max', 'min']);
     }
 }

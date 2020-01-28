@@ -37,7 +37,7 @@ class MySQL
     public function __construct()
     {
         try {
-            $this->data = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . (new ReflectionClass($this))->getShortName() . '.json'));
+            $this->data = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . (new ReflectionClass($this))->getShortName() . '.json'), true);
         } catch (Exception $exception) {
             throw new MySQLSyntaxException("Unable to load MySQL schema: " . $exception->getMessage());
         }
@@ -66,18 +66,17 @@ class MySQL
             /**
              * @var $step QueryStep
              */
-            try {
-                $pathPoint = $pathPoint[$step->getIdentifier()];
-                if (is_string($pathPoint)) {
-                    if ($pathPoint == self::SEQUENCE_END_IDENTIFIER) {
-                        return [];
-                    } else {
-                        $currentPoint[] = $step->getIdentifier();
-                        $pathPoint = $this->followMapPseudoPath($pathPoint, $currentPoint);
-                    }
+
+            if (!isset($pathPoint[$step->getIdentifier()]))
+                throw new QueryPathException("Unregistered path sequence: " . $step->getIdentifier());
+            $pathPoint = $pathPoint[$step->getIdentifier()];
+            $currentPoint[] = $step->getIdentifier();
+            if (is_string($pathPoint)) {
+                if ($pathPoint == self::SEQUENCE_END_IDENTIFIER) {
+                    return [];
+                } else {
+                    $pathPoint = $this->followMapPseudoPath($pathPoint, $currentPoint);
                 }
-            } catch (Exception $exception) {
-                throw new QueryPathException("Unregistered path sequence. Exception: " . $exception->getMessage());
             }
         }
         return array_keys($pathPoint);
@@ -85,6 +84,8 @@ class MySQL
 
     private function followMapPseudoPath(string $path, array $currentPoint)
     {
+        if ($path[0] == '/')
+            $currentPoint = [];
         $path = explode('/', $path);
         while (count($path) != 0) {
             switch ($path[0]) {
@@ -100,6 +101,9 @@ class MySQL
             array_pop($path);
             $path = array_reverse($path);
         }
-        return $currentPoint;
+        $mapPoint = $this->data['map'];
+        foreach ($currentPoint as $way)
+            $mapPoint = $mapPoint[$way];
+        return $mapPoint;
     }
 }

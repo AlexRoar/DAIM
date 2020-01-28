@@ -8,7 +8,7 @@
           },
           "{{column_names}}": {
             "values": "../../values",
-            "select": "select"
+            "select": "/select"
           }
         }
       }
@@ -17,7 +17,7 @@
       "{{table_name}}": {
         "set": {
           "{{column_value_groups}}": {
-            "where": "select/*/*/*"
+            "where": "select/*/from/{{table_name_group}}/where"
           }
         }
       }
@@ -25,7 +25,7 @@
     "delete": {
       "from": {
         "{{table_name}}": {
-          "where": "select/*/*/*",
+          "where": "select/*/from/{{table_name_group}}/where",
           "{{query_end}}": "{{query_end}}"
         }
       }
@@ -40,10 +40,10 @@
                 "group by": {
                   "{{column_names}}": {
                     "having": {
-                      "{{conditions}}": "../"
+                      "{{conditions}}": "../../"
                     },
                     "{{query_end}}": "{{query_end}}",
-                    "order by": "../../order by"
+                    "order by": "../../../order by"
                   }
                 },
                 "order by": {
@@ -56,35 +56,35 @@
         }
       },
       "all": {
-        "from": "../*"
+        "from": "/select/*/from"
       },
       "{{column_names}}": {
-        "from": "../*"
+        "from": "/select/*/from"
       },
       "count": {
         "{{parenthesis}}": {
           "*": {
             "{{end_parenthesis}}": {
-              "from": "../*"
+              "from": "/select/*/from"
             }
           },
           "distinct": {
             "{{column_name}}": {
               "{{end_parenthesis}}": {
-                "from": "../*"
+                "from": "/select/*/from"
               }
             }
           },
           "all": {
             "{{column_name}}": {
               "{{end_parenthesis}}": {
-                "from": "../*"
+                "from": "/select/*/from"
               }
             }
           },
           "{{column_name}}": {
             "{{end_parenthesis}}": {
-              "from": "../*"
+              "from": "/select/*/from"
             }
           }
         }
@@ -94,13 +94,13 @@
           "distinct": {
             "{{column_name}}": {
               "{{end_parenthesis}}": {
-                "from": "../*"
+                "from": "/select/*/from"
               }
             }
           },
           "{{column_name}}": {
             "{{end_parenthesis}}": {
-              "from": "../*"
+              "from": "/select/*/from"
             }
           }
         }
@@ -110,13 +110,13 @@
           "distinct": {
             "{{column_name}}": {
               "{{end_parenthesis}}": {
-                "from": "../*"
+                "from": "/select/*/from"
               }
             }
           },
           "{{column_name}}": {
             "{{end_parenthesis}}": {
-              "from": "../*"
+              "from": "/select/*/from"
             }
           }
         }
@@ -126,13 +126,13 @@
           "distinct": {
             "{{column_name}}": {
               "{{end_parenthesis}}": {
-                "from": "../*"
+                "from": "/select/*/from"
               }
             }
           },
           "{{column_name}}": {
             "{{end_parenthesis}}": {
-              "from": "../*"
+              "from": "/select/*/from"
             }
           }
         }
@@ -142,13 +142,13 @@
           "distinct": {
             "{{column_name}}": {
               "{{end_parenthesis}}": {
-                "from": "../*"
+                "from": "/select/*/from"
               }
             }
           },
           "{{column_name}}": {
             "{{end_parenthesis}}": {
-              "from": "../*"
+              "from": "/select/*/from"
             }
           }
         }
