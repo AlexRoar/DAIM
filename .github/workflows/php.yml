@@ -31,20 +31,26 @@ jobs:
         # MYSQL_DATABASE - name for the default database that is created
         mysql database: 'daim' # optional, default is 
         # MYSQL_USER - create the specified user with superuser power for created database
-        mysql user: 'test' # optional, default is 
+        mysql user: 'test2' # optional, default is
         # MYSQL_PASSWORD - specified superuser password which user is power for created database
-        mysql password: 'qwerty123' # optional, default is 
+        mysql password: 'qwerty123' # optional, default is
+
+    - name: Install MySQL CLI, Import dummy data, Run an example query
+      run: |
+        sudo apt-get install default-mysql-client
+        mysql -h 127.0.0.1 -u root -pqwerty123 daim < sql-data/dummy.sql
+        mysql -h 127.0.0.1 -u root -pqwerty123 --execute="SELECT * FROM daim.Persons"
 
     - name: Update lock file
       run: composer update
-      
+
     - name: Validate composer.json and composer.lock
       run: composer validate
 
     - name: Install dependencies
-      run: composer install --prefer-dist 
+      run: composer install --prefer-dist
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+      # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Run test suite
