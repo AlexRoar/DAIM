@@ -31,24 +31,12 @@
   },
   "autoload": {
     "psr-4": {
-      "DAIM\\": "src/DAIM",
-      "DAIM\\Core\\": "src/DAIM/Core",
-      "DAIM\\Exceptions\\": "src/DAIM/Exceptions",
-      "DAIM\\Generators\\": "src/DAIM/Generators",
-      "DAIM\\Syntax\\": "src/DAIM/Syntax",
-      "DAIM\\Syntax\\SQLEntities\\": "src/DAIM/Syntax/SQLEntities",
-      "DAIM\\Tables\\": "src/DAIM/Tables"
+      "DAIM\\": "src/DAIM"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "DAIM\\": "src/DAIM",
-      "DAIM\\Core\\": "src/DAIM/Core",
-      "DAIM\\Exceptions\\": "src/DAIM/Exceptions",
-      "DAIM\\Generators\\": "src/DAIM/Generators",
-      "DAIM\\Syntax\\": "src/DAIM/Syntax",
-      "DAIM\\Syntax\\SQLEntities\\": "src/DAIM/Syntax/SQLEntities",
-      "DAIM\\Tables\\": "src/DAIM/Tables"
+      "DAIM\\": "src/DAIM"
     }
   },
   "scripts": {
