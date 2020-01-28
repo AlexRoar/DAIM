@@ -8,7 +8,6 @@
 
 use DAIM\Core\QueryPath;
 use DAIM\Exceptions\MySQLSyntaxException;
-use DAIM\Exceptions\QueryPathException;
 use DAIM\Syntax\MySQL;
 use PHPUnit\Framework\TestCase;
 
@@ -65,7 +64,7 @@ class SyntaxMySQLTest extends TestCase
     }
 
     /**
-     * @expectedException  QueryPathException
+     * @expectedException  DAIM\Exceptions\QueryPathException
      * @depends testNextStepsRetrieve
      * @throws MySQLSyntaxException
      * @throws ReflectionException
