@@ -4,10 +4,10 @@
       "into": {
         "{{table_name}}": {
           "values": {
-            "{{": "{{query_end}}"
+            "{{values_group}}": "{{query_end}}"
           },
           "{{column_names}}": {
-            "values": "../values",
+            "values": "../../values",
             "select": "select"
           }
         }

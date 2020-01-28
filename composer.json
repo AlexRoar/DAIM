@@ -31,7 +31,7 @@
   },
   "autoload": {
     "psr-4": {
-      "DAIM\\": "src/",
+      "DAIM\\": "src/DAIM",
       "DAIM\\Core\\": "src/DAIM/Core",
       "DAIM\\Exceptions\\": "src/DAIM/Exceptions",
       "DAIM\\Generators\\": "src/DAIM/Generators",
@@ -42,7 +42,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "DAIM\\": "src/",
+      "DAIM\\": "src/DAIM",
       "DAIM\\Core\\": "src/DAIM/Core",
       "DAIM\\Exceptions\\": "src/DAIM/Exceptions",
       "DAIM\\Generators\\": "src/DAIM/Generators",
