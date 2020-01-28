@@ -1,0 +1,193 @@
+{
+  "map": {
+    "insert": {
+      "into": {
+        "{{table_name}}": {
+          "values": {
+            "{{": "{{query_end}}"
+          },
+          "{{column_names}}": {
+            "values": "../values",
+            "select": "select"
+          }
+        }
+      }
+    },
+    "update": {
+      "{{table_name}}": {
+        "set": {
+          "{{column_value_groups}}": {
+            "where": "select/*/*/*"
+          }
+        }
+      }
+    },
+    "delete": {
+      "from": {
+        "{{table_name}}": {
+          "where": "select/*/*/*",
+          "{{query_end}}": "{{query_end}}"
+        }
+      }
+    },
+    "select": {
+      "*": {
+        "from": {
+          "{{table_name_group}}": {
+            "where": {
+              "{{conditions}}": {
+                "{{query_end}}": "{{query_end}}",
+                "group by": {
+                  "{{column_names}}": {
+                    "having": {
+                      "{{conditions}}": "../"
+                    },
+                    "{{query_end}}": "{{query_end}}",
+                    "order by": "../../order by"
+                  }
+                },
+                "order by": {
+                  "{{sort_orders_group}}": "{{sort_orders_group}}"
+                }
+              }
+            },
+            "{{query_end}}": "{{query_end}}"
+          }
+        }
+      },
+      "all": {
+        "from": "../*"
+      },
+      "{{column_names}}": {
+        "from": "../*"
+      },
+      "count": {
+        "{{parenthesis}}": {
+          "*": {
+            "{{end_parenthesis}}": {
+              "from": "../*"
+            }
+          },
+          "distinct": {
+            "{{column_name}}": {
+              "{{end_parenthesis}}": {
+                "from": "../*"
+              }
+            }
+          },
+          "all": {
+            "{{column_name}}": {
+              "{{end_parenthesis}}": {
+                "from": "../*"
+              }
+            }
+          },
+          "{{column_name}}": {
+            "{{end_parenthesis}}": {
+              "from": "../*"
+            }
+          }
+        }
+      },
+      "sum": {
+        "{{parenthesis}}": {
+          "distinct": {
+            "{{column_name}}": {
+              "{{end_parenthesis}}": {
+                "from": "../*"
+              }
+            }
+          },
+          "{{column_name}}": {
+            "{{end_parenthesis}}": {
+              "from": "../*"
+            }
+          }
+        }
+      },
+      "avg": {
+        "{{parenthesis}}": {
+          "distinct": {
+            "{{column_name}}": {
+              "{{end_parenthesis}}": {
+                "from": "../*"
+              }
+            }
+          },
+          "{{column_name}}": {
+            "{{end_parenthesis}}": {
+              "from": "../*"
+            }
+          }
+        }
+      },
+      "max": {
+        "{{parenthesis}}": {
+          "distinct": {
+            "{{column_name}}": {
+              "{{end_parenthesis}}": {
+                "from": "../*"
+              }
+            }
+          },
+          "{{column_name}}": {
+            "{{end_parenthesis}}": {
+              "from": "../*"
+            }
+          }
+        }
+      },
+      "min": {
+        "{{parenthesis}}": {
+          "distinct": {
+            "{{column_name}}": {
+              "{{end_parenthesis}}": {
+                "from": "../*"
+              }
+            }
+          },
+          "{{column_name}}": {
+            "{{end_parenthesis}}": {
+              "from": "../*"
+            }
+          }
+        }
+      }
+    }
+  },
+  "logicOperators": {
+    "bigger": ">",
+    "smaller": "<",
+    "biggerOrEqual": ">=",
+    "smallerOrEqual": "<=",
+    "notEqual": "!=",
+    "equal": "=",
+    "equalNull": "IS NULL",
+    "notEqualNull": "IS NOT NULL",
+    "interval": "BETWEEN",
+    "inList": "IN",
+    "similar": "LIKE",
+    "exists": "EXISTS"
+  },
+  "compareToSet": {
+    "all": "ALL"
+  },
+  "logicConjunctions": {
+    "and": "AND",
+    "or": "OR"
+  },
+  "functions": {
+    "concatenate": "CONCAT([string])",
+    "translate": "TRANSLATE(column, string, string, {FROM} table)",
+    "replace": "REPLACE(column, string, string)",
+    "upper": "UPPER(string)",
+    "lower": "LOWER(string)",
+    "substr": "SUBSTR(column, int, int)",
+    "instr": "INSTR(column, string, int, int)",
+    "ltrim": "LTRIM(column, string)",
+    "rtrim": "RTRIM(column, string)",
+    "decode": "DECODE(column, (string, string,[string]))",
+    "length": "LENGTH(column)",
+    "ifnull": "IFNULL(column, string)"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "name": "alexdremov/daim",
+  "description": "Lightweight and efficient MySQL PHP requests framework",
+  "type": "library",
+  "keywords": [
+    "MySQL",
+    "MySQL PHP",
+    "PHP",
+    "queries",
+    "requests"
+  ],
+  "homepage": "https://github.com/AlexRoar/DAIM",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Aleksandr Dremov",
+      "email": "dremov.me@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "ext-mysqli": "*",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "php": ">=7.1",
+    "phpunit/phpunit": "^7",
+    "ext-mysqli": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "DAIM\\": "src/",
+      "DAIM\\Core\\": "src/DAIM/Core",
+      "DAIM\\Exceptions\\": "src/DAIM/Exceptions",
+      "DAIM\\Generators\\": "src/DAIM/Generators",
+      "DAIM\\Syntax\\": "src/DAIM/Syntax",
+      "DAIM\\Syntax\\SQLEntities\\": "src/DAIM/Syntax/SQLEntities",
+      "DAIM\\Tables\\": "src/DAIM/Tables"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "DAIM\\": "src/",
+      "DAIM\\Core\\": "src/DAIM/Core",
+      "DAIM\\Exceptions\\": "src/DAIM/Exceptions",
+      "DAIM\\Generators\\": "src/DAIM/Generators",
+      "DAIM\\Syntax\\": "src/DAIM/Syntax",
+      "DAIM\\Syntax\\SQLEntities\\": "src/DAIM/Syntax/SQLEntities",
+      "DAIM\\Tables\\": "src/DAIM/Tables"
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  }
+}
