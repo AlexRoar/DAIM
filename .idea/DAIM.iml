@@ -2,9 +2,15 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/DAIM/Exceptions" isTestSource="false" packagePrefix="DAIM\Exceptions\" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/DAIM/Core" isTestSource="false" packagePrefix="DAIM\Core\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/DAIM/Generators" isTestSource="false" packagePrefix="DAIM\Generators\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/DAIM/Syntax/SQLEntities" isTestSource="false" packagePrefix="DAIM\Syntax\SQLEntities\" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="DAIM\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/DAIM/Syntax" isTestSource="false" packagePrefix="DAIM\Syntax\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/DAIM/tables" isTestSource="false" packagePrefix="DAIM\Tables\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />

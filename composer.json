@@ -31,7 +31,13 @@
   },
   "autoload": {
     "psr-4": {
-      "DAIM\\": "src/"
+      "DAIM\\": "src/",
+      "DAIM\\Core\\": "src/DAIM/core",
+      "DAIM\\Exceptions\\": "src/DAIM/exceptions",
+      "DAIM\\Generators\\": "src/DAIM/generators",
+      "DAIM\\Syntax\\": "src/DAIM/syntax",
+      "DAIM\\Syntax\\SQLEntities\\": "src/DAIM/syntax/SQLEntities",
+      "DAIM\\Tables\\": "src/DAIM/tables"
     }
   },
   "scripts": {
