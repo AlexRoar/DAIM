@@ -16,7 +16,7 @@ jobs:
         # The port of host
         host port: 3306
         # The port of container
-        container port: 3306
+        container port: 3307
         # --character-set-server - The character set of MySQL server
         character set server: utf8
         # --collation-server - The character collation of MySQL server
@@ -46,3 +46,9 @@ jobs:
 
     - name: Run test suite
       run: composer run-script test
+      
+    - name: PHP Syntax Checker (Lint)
+      uses: StephaneBour/actions-php-lint@7.3
+      with:
+        # Folder to check syntax
+        dir: ./src/DAIM
