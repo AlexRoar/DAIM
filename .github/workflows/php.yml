@@ -9,7 +9,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      
+
+    - name: PHP Syntax Checker (Lint)
+      uses: StephaneBour/actions-php-lint@7.3
+      with:
+        # Folder to check syntax
+        dir: ./src/DAIM
+
     - name: Shutdown Ubuntu MySQL (SUDO)
       run: sudo service mysql stop # Shutdown the Default MySQL, "sudo" is necessary, please not remove it
 
@@ -34,6 +40,15 @@ jobs:
         mysql user: 'test2' # optional, default is
         # MYSQL_PASSWORD - specified superuser password which user is power for created database
         mysql password: 'qwerty123' # optional, default is
+    - name: Waiting for MySQL to be ready
+      run: |
+        for i in `seq 1 15`;
+        do
+          nc -z 127.0.0.1 3306 && echo Success && exit 0
+          echo -n .
+          sleep 1
+        done
+        echo Failed waiting for MySQL && exit 1
 
     - name: Install MySQL CLI, Import dummy data, Run an example query
       run: |
@@ -55,9 +70,3 @@ jobs:
 
     - name: Run test suite
       run: composer run-script test
-      
-    - name: PHP Syntax Checker (Lint)
-      uses: StephaneBour/actions-php-lint@7.3
-      with:
-        # Folder to check syntax
-        dir: ./src/DAIM
