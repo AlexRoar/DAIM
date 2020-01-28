@@ -21,19 +21,19 @@ jobs:
         # The port of container
         container port: 3306
         # --character-set-server - The character set of MySQL server
-        character set server: utf8
+        character set server: 'utf8'
         # --collation-server - The character collation of MySQL server
-        collation server: utf8_general_ci
+        collation server: 'utf8_general_ci'
         # Version of MySQL to use
         # mysql version: # optional, default is latest
         # MYSQL_ROOT_PASSWORD - root superuser password
-        mysql root password: qwerty123 # optional, default is 
+        mysql root password: 'qwerty123' # optional, default is 
         # MYSQL_DATABASE - name for the default database that is created
-        mysql database: daim # optional, default is 
+        mysql database: 'daim' # optional, default is 
         # MYSQL_USER - create the specified user with superuser power for created database
-        mysql user: test # optional, default is 
+        mysql user: 'test' # optional, default is 
         # MYSQL_PASSWORD - specified superuser password which user is power for created database
-        mysql password: qwerty123 # optional, default is 
+        mysql password: 'qwerty123' # optional, default is 
 
     - name: Update lock file
       run: composer update
