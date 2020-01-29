@@ -61,6 +61,10 @@ class QueryBuilder
         $this->path = new QueryPath();
         $this->MySQL = new MySQL();
         $this->updateExpectedValues();
+        if (!Connection::isInitiated($mode))
+            throw new QueryBuilderException('You can\'t use Query Builder without activated connection.' .
+                ' Initiate your connection using Connection::setCredentials(<credentials>) ' .
+                'and do not forget about Connection::initConnection()!');
     }
 
 
