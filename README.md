@@ -23,7 +23,7 @@ composer require alexdremov/daim
 
 ## Beta: what's ready?
 
-You can use it for keeping your Database connection
+You can use it for keeping your Database connections organized and single.
 ```php
 use DAIM\Core\Connection;
 use DAIM\Core\Credentials;
@@ -52,6 +52,30 @@ Connection::setCredentials($cred2, "secondConnectionName");
 Connection::initConnection("secondConnectionName");
     
 Connection::getConnection("secondConnectionName")->query('SELECT * FROM `Persons` WHERE 1');
+```
+
+Currently, I am working on Query Builder. Some features are already available:
+
+```php
+use DAIM\Core\QueryBuilder;
+use DAIM\Syntax\SQLEntities\Conditions;
+
+$qb = new QueryBuilder();
+$result = $qb->select()->all()->from()->tableName('Information')->request();
+
+# Or more complicated usage:
+
+$qb->clear(); # clear from previous query.
+$result = $qb->select()->
+    columns('Persons.LastName', 'Persons.PersonID', 'Information.Tel')->
+    from()->tableNames('Information', 'Persons')->
+    where()->conditions(
+        (new Conditions())->field('Information.PersonID')->equal()->field('Persons.PersonID')
+    )->request();
+
+# Generates SQL
+# SELECT Persons.LastName, Persons.PersonID, Information.Tel FROM Information, Persons WHERE Information.PersonID = Persons.PersonID
+# final ->request() returns instance of QueryResult class.
 ```
 
 Such limited library usage is due to the beta status of the project.
