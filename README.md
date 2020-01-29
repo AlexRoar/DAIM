@@ -51,7 +51,7 @@ Connection::getConnection(); # returns active MySQL connection (instance of mysq
 Connection::setCredentials($cred2, "secondConnectionName");
 Connection::initConnection("secondConnectionName");
     
-Connection::getConnection("secondConnectionName")->query('SELECT * FROM `Persons` WHERE 1');
+Connection::query('SELECT * FROM `Persons` WHERE 1', "secondConnectionName");
 ```
 
 Currently, I am working on Query Builder. Some features are already available:
