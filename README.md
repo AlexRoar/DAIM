@@ -61,7 +61,7 @@ use DAIM\Core\QueryBuilder;
 use DAIM\Syntax\SQLEntities\Conditions;
 
 $qb = new QueryBuilder();
-$result = $qb->select('*')>from('Information')->request();
+$result = $qb->select('*')->from('Information')->request();
 
 # Or more complicated usage:
 
