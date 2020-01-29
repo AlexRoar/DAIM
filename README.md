@@ -61,15 +61,14 @@ use DAIM\Core\QueryBuilder;
 use DAIM\Syntax\SQLEntities\Conditions;
 
 $qb = new QueryBuilder();
-$result = $qb->select()->all()->from()->tableName('Information')->request();
+$result = $qb->select('*')>from('Information')->request();
 
 # Or more complicated usage:
 
 $qb->clear(); # clear from previous query.
-$result = $qb->select()->
-    columns('Persons.LastName', 'Persons.PersonID', 'Information.Tel')->
-    from()->tableNames('Information', 'Persons')->
-    where()->conditions(
+$result = $qb->select('Persons.LastName', 'Persons.PersonID', 'Information.Tel')->
+    from('Information', 'Persons')->
+    where(
         (new Conditions())->field('Information.PersonID')->equal()->field('Persons.PersonID')
     )->request();
 

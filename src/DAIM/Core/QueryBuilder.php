@@ -65,12 +65,26 @@ class QueryBuilder
 
 
     /**
+     * @param null $range
      * @return $this
      * @throws QueryPathException
      */
-    public function select()
+    public function select(...$range)
     {
         $this->makeStep(__FUNCTION__);
+        if (count($range) != 0) {
+            if (count($range) == 1) {
+                if ($range[0] == '*' or strtolower($range[0]) == 'all')
+                    $this->makeStep('*');
+                else {
+                    $range = new ColumnNames($range[0]);
+                    $this->makeStep($range->getMapName(), $range);
+                }
+            } else {
+                $range = new ColumnNames($range);
+                $this->makeStep($range->getMapName(), $range);
+            }
+        }
         return $this;
     }
 
@@ -95,12 +109,27 @@ class QueryBuilder
     }
 
     /**
+     * @param string|array|TableNameGroup|TableName $fromWhat
      * @return $this
      * @throws QueryPathException
      */
-    public function from()
+    public function from(...$fromWhat)
     {
         $this->makeStep(__FUNCTION__);
+        if (count($fromWhat) != 0) {
+            if (count($fromWhat) == 1) {
+                if (is_string($fromWhat[0])) {
+                    $fromWhat = new TableName($fromWhat[0]);
+                    $this->makeStep($fromWhat->getMapName(), $fromWhat);
+                } elseif ($fromWhat[0] instanceof TableName) {
+                    $fromWhat = $fromWhat[0];
+                    $this->makeStep($fromWhat->getMapName(), $fromWhat);
+                }
+            } else {
+                $fromWhat = new TableNameGroup($fromWhat);
+                $this->makeStep($fromWhat->getMapName(), $fromWhat);
+            }
+        }
         return $this;
     }
 
@@ -108,9 +137,12 @@ class QueryBuilder
      * @return $this
      * @throws QueryPathException
      */
-    public function where()
+    public function where($condition = null)
     {
         $this->makeStep(__FUNCTION__);
+        if (!is_null($condition)) {
+            $this->conditions($condition);
+        }
         return $this;
     }
 
@@ -166,6 +198,7 @@ class QueryBuilder
                     $step = $singleStep;
             }
         }
+        $step = trim($step);
         $this->checkIsExpectedAndThrowError($step);
         $this->path->addPathStep($step, $value);
         $this->updateExpectedValues();
@@ -226,7 +259,7 @@ class QueryBuilder
         if (!$this->isExpected($operation))
             throw new QueryPathException('Unexpected sequence of query request. Requested: ' .
                 $operation .
-                '\n.These options were expected: ' . implode(", ", $this->expected));
+                '.These options were expected: ' . implode(", ", $this->expected));
     }
 
     /**

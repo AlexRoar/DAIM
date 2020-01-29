@@ -68,13 +68,20 @@ class QueryBuilderTest extends TestCase
         $this->assertEquals($method->invokeArgs($qb, []), "SELECT * FROM Persons WHERE LastName = 'foo' AND PersonID = '1'");
 
         $qb->clear();
+        $qb->select('*')->from()->tableName('Persons')->where()->conditions($cond);
+        $this->assertEquals($method->invokeArgs($qb, []), "SELECT * FROM Persons WHERE LastName = 'foo' AND PersonID = '1'");
 
+        $qb->clear();
+        $qb->select('*')->from('Persons')->where()->conditions($cond);
+        $this->assertEquals($method->invokeArgs($qb, []), "SELECT * FROM Persons WHERE LastName = 'foo' AND PersonID = '1'");
+
+        $qb->clear();
         $qb->select();
         $this->assertEquals($method->invokeArgs($qb, []), "SELECT");
 
         $qb->clear();
 
-        $qb->select()->columns('LastName', 'PersonID');
+        $qb->select('LastName', 'PersonID');
         $this->assertEquals($method->invokeArgs($qb, []), "SELECT LastName, PersonID");
 
         $qb->clear();
@@ -82,7 +89,7 @@ class QueryBuilderTest extends TestCase
         $qb->select()->
         columns('Persons.LastName', 'Persons.PersonID', 'Information.Tel')->
         from()->tableNames('Information', 'Persons')->
-        where()->conditions(
+        where(
             (new Conditions())->field('Information.PersonID')->equal()->field('Persons.PersonID')
         );
         $this->assertEquals(

@@ -79,6 +79,7 @@ class Conditions implements BasicEntity
 
     /**
      * @param $field
+     * @return Conditions
      */
     public function field($field)
     {
@@ -197,6 +198,7 @@ class Conditions implements BasicEntity
     /**
      * @param $value
      * @param string $type
+     * @return Conditions
      * @throws QueryBuilderException
      * @throws ConnectionException
      * @throws CredentialsException
