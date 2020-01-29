@@ -47,10 +47,10 @@ abstract class Connection
             throw new ConnectionException("Connection object is not instance of mysqli class :" . get_class($connection));
         } else {
             if ($connection->connect_errno) {
-                throw new ConnectionException("Connection to DB failed", $connection->connect_error);
+                throw new ConnectionException("Connection to DB failed " . $connection->connect_error);
             }
             if (!$connection->ping()) {
-                throw new ConnectionException("Server is not alive", $connection->error);
+                throw new ConnectionException("Server is not alive " . $connection->error);
             }
         }
         return $connection;
@@ -182,5 +182,72 @@ abstract class Connection
             }
             return true;
         }
+    }
+
+    /**
+     * @param $charset
+     * @param string $mode
+     * @param bool|null $success
+     * @throws CredentialsException
+     */
+    public static function setCharset($charset, $mode = 'default', bool &$success = null)
+    {
+        self::checkAndThrowModeError();
+        $success = self::$connections[$mode]['connection']->set_charset($charset);
+    }
+
+    /**
+     * @param $string
+     * @param string $mode
+     * @return mixed
+     * @throws ConnectionException
+     * @throws CredentialsException
+     */
+    public static function realEscapeString($string, $mode = 'default')
+    {
+        self::checkAndThrowModeError();
+        if (!self::isInitiated($mode))
+            throw new ConnectionException(
+                'Can\'t use escapeString() without open Connection.' .
+                ' Set up or init your ' . $mode . ' connection \DAIM\Core\Connection class before using QueryBuilder!');
+        return self::$connections[$mode]['connection']->real_escape_string($string);
+    }
+
+    /**
+     * @param $string
+     * @param string $mode
+     * @return mixed
+     * @throws ConnectionException
+     * @throws CredentialsException
+     */
+    public static function escapeString($string, $mode = 'default')
+    {
+        self::checkAndThrowModeError();
+        if (!self::isInitiated($mode))
+            throw new ConnectionException(
+                'Can\'t use escapeString() without open Connection.' .
+                ' Set up or init your ' . $mode . ' connection \DAIM\Core\Connection class before using QueryBuilder!');
+        /**
+         * @var $connections [$mode] mysqli
+         */
+        return self::$connections[$mode]['connection']->escape_string($string);
+    }
+
+    public static function query($sql, $mode = 'default')
+    {
+        return self::$connections[$mode]['connection']->query($sql);
+    }
+
+    public static function multiQuery($sql, $mode = 'default')
+    {
+        $finalRes = [];
+        self::$connections[$mode]['connection']->multi_query($sql);
+        do {
+            if ($res = self::$connections[$mode]['connection']->store_result()) {
+                $finalRes[] = $res;
+                $res->free();
+            }
+        } while (self::$connections[$mode]['connection']->more_results() && self::$connections[$mode]['connection']->next_result());
+        return $finalRes;
     }
 }

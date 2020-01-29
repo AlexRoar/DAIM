@@ -46,6 +46,7 @@ class MySQL
     /**
      * @param QueryPath|null $path
      * @return array
+     * @throws QueryPathException
      */
     public function getExpected(QueryPath $path = null): array
     {

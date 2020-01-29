@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2020.
  * Designed and developed by Aleksandr Dremov
@@ -6,13 +7,7 @@
  * Contact me: dremov.me@gmail.com
  */
 
-namespace DAIM\syntax\SQLEntities;
-
-
-interface BasicEntity
+class ConditionsTest
 {
 
-    public function getMapName();
-
-    public function __toString();
 }

@@ -10,6 +10,7 @@ namespace DAIM\Core;
 
 
 use DAIM\Exceptions\BasicTableException;
+use DAIM\Exceptions\MySQLSyntaxException;
 use DAIM\Exceptions\TableObjectException;
 
 /**
@@ -39,6 +40,7 @@ class BasicTable
     /**
      * @return QueryBuilder
      * @throws BasicTableException
+     * @throws MySQLSyntaxException
      */
     public function startQuery()
     {

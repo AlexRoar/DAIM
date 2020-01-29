@@ -9,10 +9,10 @@
 namespace DAIM\Syntax\SQLEntities;
 
 
-class ColumnNames implements BasicEntity
+class TableNameGroup implements BasicEntity
 {
 
-    private $mapName = '{{column_names}}';
+    private $identifier = '{{table_name_group}}';
 
     private $names;
 
@@ -23,7 +23,7 @@ class ColumnNames implements BasicEntity
 
     public function getMapName()
     {
-        return $this->mapName;
+        return $this->identifier;
     }
 
     public function __toString()

@@ -6,13 +6,10 @@
  * Contact me: dremov.me@gmail.com
  */
 
-namespace DAIM\syntax\SQLEntities;
+namespace DAIM\Exceptions;
 
 
-interface BasicEntity
+class QueryBuilderException extends CustomException
 {
 
-    public function getMapName();
-
-    public function __toString();
 }

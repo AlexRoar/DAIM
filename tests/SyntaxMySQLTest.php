@@ -20,6 +20,7 @@ use PHPUnit\Framework\TestCase;
 class SyntaxMySQLTest extends TestCase
 {
     /**
+     * @throws MySQLSyntaxException
      * @throws ReflectionException
      */
     public function testMapPathwayPseudoPath()
@@ -41,6 +42,7 @@ class SyntaxMySQLTest extends TestCase
 
     /**
      * @depends testMapPathwayPseudoPath
+     * @throws MySQLSyntaxException
      * @throws ReflectionException
      */
     public function testNextStepsRetrieve()
@@ -106,6 +108,13 @@ class SyntaxMySQLTest extends TestCase
         $path->addPathStep('select', '');
         $this->assertEquals(
             $method->invokeArgs($MySQL, [$path]),
-            ['*', 'all', '{{column_names}}', 'count', 'sum', 'avg', 'max', 'min']);
+            ['*', '{{column_names}}']);
+    }
+
+    public function testStartingValuePath()
+    {
+        $MySQL = new MySQL();
+        $path = new QueryPath();
+        $this->assertEquals($MySQL->getExpected($path), ['insert', 'update', 'delete', 'select']);
     }
 }

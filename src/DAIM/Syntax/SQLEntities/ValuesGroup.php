@@ -9,25 +9,16 @@
 namespace DAIM\Syntax\SQLEntities;
 
 
-class ColumnNames implements BasicEntity
+class ValuesGroup implements BasicEntity
 {
-
-    private $mapName = '{{column_names}}';
-
-    private $names;
-
-    public function __construct($names)
-    {
-        $this->names = $names;
-    }
 
     public function getMapName()
     {
-        return $this->mapName;
+        // TODO: Implement getMapName() method.
     }
 
     public function __toString()
     {
-        return implode(', ', $this->names);
+        // TODO: Implement __toString() method.
     }
 }
