@@ -65,12 +65,12 @@ SELECT:
 ```php
 use DAIM\Core\QueryBuilder;
 use DAIM\Syntax\SQLEntities\Conditions;
+
 $qb = new QueryBuilder();
 $result = $qb->select('*')->from('Information')->request();
 
 # Or more complicated usage:
 
-$qb->clear(); # clear from previous query.
 $result = $qb->select(
     'Persons.LastName', 'Persons.PersonID', 'Information.Tel'
 )->from(
