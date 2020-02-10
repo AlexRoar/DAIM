@@ -24,10 +24,11 @@ composer require alexdremov/daim
 ## Beta: what's ready?
 
 You can use it for keeping your Database connections organized and single.
+At first, you need to setup the framework:
 ```php
 use DAIM\Core\Connection;
 use DAIM\Core\Credentials;
-    
+
 $cred = new Credentials();
 $cred->setHost(host);
 $cred->setUsername(username);
@@ -37,7 +38,7 @@ $cred->setPort(port);
 
 Connection::setCredentials($cred);
 Connection::initConnection();
-   
+
 Connection::getConnection(); # returns active MySQL connection (instance of mysqli class);
 
 # To set up a second connection (maybe to the second database),
@@ -50,7 +51,11 @@ Connection::getConnection(); # returns active MySQL connection (instance of mysq
 
 Connection::setCredentials($cred2, "secondConnectionName");
 Connection::initConnection("secondConnectionName");
-    
+```
+
+Now we are ready to go.
+```php
+// Basic raw query.
 Connection::query('SELECT * FROM `Persons` WHERE 1', "secondConnectionName");
 ```
 
