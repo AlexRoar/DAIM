@@ -6,9 +6,13 @@
           "values": {
             "{{values_group}}": "{{query_end}}"
           },
-          "{{column_names}}": {
-            "values": "../../values",
-            "select": "/select"
+          "{{open_parenthesis}}": {
+            "{{column_names}}": {
+              "{{close_parenthesis}}": {
+                "values": "../../../../values",
+                "select": "/select"
+              }
+            }
           }
         }
       }

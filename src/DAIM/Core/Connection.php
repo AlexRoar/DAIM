@@ -66,7 +66,7 @@ abstract class Connection
             self::$connections[$mode]['connection'] = new mysqli(self::$connections[$mode]['credentials']->getHost($mode),
                 self::$connections[$mode]['credentials']->getUsername($mode),
                 self::$connections[$mode]['credentials']->getPassword($mode),
-                self::$connections[$mode]['credentials']->getDbname($mode),
+                self::$connections[$mode]['credentials']->getDBname($mode),
                 self::$connections[$mode]['credentials']->getPort($mode),
                 self::$connections[$mode]['credentials']->getSocket($mode));
         } catch (Exception $exception) {

@@ -30,13 +30,13 @@ class SyntaxMySQLTest extends TestCase
 
         $MySQL = new MySQL();
         $this->assertEquals(
-            array_keys($method->invokeArgs($MySQL, ['../', ['insert', 'into', '{{table_name}}', '{{column_names}}']])),
-            ['values', '{{column_names}}']);
+            array_keys($method->invokeArgs($MySQL, ['../', ['insert', 'into', '{{table_name}}', '{{open_parenthesis}}']])),
+            array('values', '{{open_parenthesis}}'));
         $this->assertEquals(
-            array_keys($method->invokeArgs($MySQL, ['..', ['insert', 'into', '{{table_name}}', '{{column_names}}']])),
-            ['values', '{{column_names}}']);
+            array_keys($method->invokeArgs($MySQL, ['..', ['insert', 'into', '{{table_name}}', '{{open_parenthesis}}']])),
+            array('values', '{{open_parenthesis}}'));
         $this->assertEquals(
-            $method->invokeArgs($MySQL, ['../../values/{{values_group}}', ['insert', 'into', '{{table_name}}', '{{column_names}}', 'values']]),
+            $method->invokeArgs($MySQL, ['../values/{{values_group}}', ['insert', 'into', '{{table_name}}', '{{open_parenthesis}}']]),
             '{{query_end}}');
     }
 
@@ -94,7 +94,9 @@ class SyntaxMySQLTest extends TestCase
         $path->addPathStep('insert', '');
         $path->addPathStep('into', '');
         $path->addPathStep('{{table_name}}', '');
+        $path->addPathStep('{{open_parenthesis}}', '');
         $path->addPathStep('{{column_names}}', '');
+        $path->addPathStep('{{close_parenthesis}}', '');
         $this->assertEquals(
             $method->invokeArgs($MySQL, [$path]),
             ['values', 'select']);

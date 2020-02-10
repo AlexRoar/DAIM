@@ -51,4 +51,18 @@ class QueryResult
         return $this->result->num_rows;
     }
 
+    public function fetchArray($resulttype = MYSQLI_BOTH)
+    {
+        return $this->result->fetch_array($resulttype);
+    }
+
+    public function fetchAssoc()
+    {
+        return $this->result->fetch_assoc();
+    }
+
+    public function fetchRow()
+    {
+        return $this->result->fetch_row();
+    }
 }

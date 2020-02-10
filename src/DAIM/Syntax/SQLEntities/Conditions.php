@@ -90,72 +90,88 @@ class Conditions implements BasicEntity
     /**
      *
      */
-    public function equal()
+    public function equal($value = null)
     {
         $this->sequence[] = $this->logicOperators[__FUNCTION__];
+        if (!is_null($value))
+            $this->val($value);
         return $this;
     }
 
     /**
      *
      */
-    public function largerThan()
+    public function largerThan($value = null)
     {
         $this->sequence[] = $this->logicOperators[__FUNCTION__];
+        if (!is_null($value))
+            $this->val($value);
         return $this;
     }
 
     /**
      *
      */
-    public function lessThan()
+    public function lessThan($value = null)
     {
         $this->sequence[] = $this->logicOperators[__FUNCTION__];
+        if (!is_null($value))
+            $this->val($value);
         return $this;
     }
 
     /**
      *
      */
-    public function largerOrEqualThan()
+    public function largerOrEqualThan($value = null)
     {
         $this->sequence[] = $this->logicOperators[__FUNCTION__];
+        if (!is_null($value))
+            $this->val($value);
         return $this;
     }
 
     /**
      *
      */
-    public function lessOrEqualThan()
+    public function lessOrEqualThan($value = null)
     {
         $this->sequence[] = $this->logicOperators[__FUNCTION__];
+        if (!is_null($value))
+            $this->val($value);
         return $this;
     }
 
     /**
      *
      */
-    public function notEqual()
+    public function notEqual($value = null)
     {
         $this->sequence[] = $this->logicOperators[__FUNCTION__];
+        if (!is_null($value))
+            $this->val($value);
         return $this;
     }
 
     /**
      *
      */
-    public function equalNull()
+    public function equalNull($value = null)
     {
         $this->sequence[] = $this->logicOperators[__FUNCTION__];
+        if (!is_null($value))
+            $this->val($value);
         return $this;
     }
 
     /**
      *
      */
-    public function notEqualNull()
+    public function notEqualNull($value = null)
     {
         $this->sequence[] = $this->logicOperators[__FUNCTION__];
+        if (!is_null($value))
+            $this->val($value);
         return $this;
     }
 
@@ -171,18 +187,21 @@ class Conditions implements BasicEntity
     /**
      *
      */
-    public function like()
+    public function like($value = 'null')
     {
         $this->sequence[] = $this->logicOperators[__FUNCTION__];
+        if (!is_null($value))
+            $this->val($value);
         return $this;
     }
 
     /**
      *
      */
-    public function inList()
+    public function inList(array $list)
     {
         $this->sequence[] = $this->logicOperators[__FUNCTION__];
+        $this->sequence[] = '(\'' . implode("','", $list) . '\')';
         return $this;
     }
 
@@ -203,7 +222,7 @@ class Conditions implements BasicEntity
      * @throws ConnectionException
      * @throws CredentialsException
      */
-    public function value($value, $type = 'auto')
+    public function val($value)
     {
         if (!Connection::isInitiated($this->mode))
             throw new QueryBuilderException(
@@ -213,13 +232,12 @@ class Conditions implements BasicEntity
 
         switch (gettype($value)) {
             case 'bool':
-            case 'int':
+            case 'integer':
                 $this->sequence[] = $value;
                 break;
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'array':
                 $value = json_encode($value);
-                $this->sequence[] = '\'' . $this->realEscapeString($value) . '\'';
-                break;
             case 'string':
             default:
                 $this->sequence[] = '\'' . $this->realEscapeString($value) . '\'';
@@ -267,10 +285,15 @@ class Conditions implements BasicEntity
         return $this;
     }
 
-    public function endParenthesis()
+    public function closeParenthesis()
     {
         $this->sequence[] = ')';
         return $this;
+    }
+
+    public function clear()
+    {
+        $this->sequence = [];
     }
 
     /**
@@ -303,7 +326,7 @@ class Conditions implements BasicEntity
         $outCommand = '';
         foreach ($this->sequence as $value)
             $outCommand .= (string)$value . ' ';
-        return $outCommand;
+        return trim($outCommand);
     }
 
     /**

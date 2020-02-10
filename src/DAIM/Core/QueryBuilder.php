@@ -14,10 +14,13 @@ use DAIM\Exceptions\QueryBuilderException;
 use DAIM\Exceptions\QueryPathException;
 use DAIM\Syntax\MySQL;
 use DAIM\syntax\SQLEntities\BasicEntity;
+use DAIM\Syntax\SQLEntities\CloseParenthesis;
 use DAIM\Syntax\SQLEntities\ColumnNames;
 use DAIM\Syntax\SQLEntities\Conditions;
+use DAIM\Syntax\SQLEntities\OpenParenthesis;
 use DAIM\Syntax\SQLEntities\TableName;
 use DAIM\Syntax\SQLEntities\TableNameGroup;
+use DAIM\Syntax\SQLEntities\ValuesGroup;
 
 /**
  * Class QueryBuilder
@@ -151,6 +154,42 @@ class QueryBuilder
     }
 
     /**
+     * @return $this
+     * @throws QueryPathException
+     */
+    public function insertInto($table = null, $values = null)
+    {
+        $this->makeStep('insert');
+        $this->makeStep('into');
+        if (!is_null($table)) {
+            $this->tableName($table);
+        }
+        if (!is_null($values) and is_array($values)) {
+            $this->columns(array_keys($values));
+            $this->values(array_values($values));
+        }
+        return $this;
+    }
+
+    /**
+     * @return $this
+     * @throws QueryPathException
+     */
+    public function values(...$values)
+    {
+        $this->makeStep('values');
+        if (count($values) != 0) {
+            if (count($values) == 1 and is_array($values)) {
+                $nextStep = new ValuesGroup($values[0]);
+            } else {
+                $nextStep = new ValuesGroup($values);
+            }
+            $this->makeStep($nextStep->getMapName(), $nextStep);
+        }
+        return $this;
+    }
+
+    /**
      * @param string $name
      * @return QueryBuilder
      * @throws QueryPathException
@@ -162,6 +201,12 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * @param $name
+     * @param mixed ...$names
+     * @return $this
+     * @throws QueryPathException
+     */
     public function tableNames($name, ...$names)
     {
         $namesAll = array_merge([$name], $names);
@@ -182,10 +227,20 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * @param mixed ...$names
+     * @return $this
+     * @throws QueryPathException
+     */
     public function columns(...$names)
     {
-        $entitity = new ColumnNames($names);
-        $this->makeStep($entitity->getMapName(), $entitity);
+        if (!is_array($names[0])) {
+            $entitity = new ColumnNames($names);
+            $this->makeStep($entitity->getMapName(), $entitity);
+        } else {
+            $entitity = new ColumnNames($names[0]);
+            $this->makeStep($entitity->getMapName(), $entitity);
+        }
         return $this;
     }
 
@@ -196,16 +251,52 @@ class QueryBuilder
      */
     private function makeStep($step, $value = '')
     {
+        $this->autoStep();
         if (is_array($step)) {
             foreach ($step as $singleStep) {
                 if ($this->isExpected($singleStep))
                     $step = $singleStep;
             }
+            if (is_array($step)) {
+                throw new QueryPathException('Unexpected sequence of query request. Requested: ' .
+                    json_encode($step) .
+                    '.These options were expected: ' . implode(", ", $this->expected));
+            }
         }
         $step = trim($step);
-        $this->checkIsExpectedAndThrowError($step);
+        try {
+            $this->checkIsExpectedAndThrowError($step);
+        } catch (QueryPathException $exception) {
+            foreach ($this->expected as $possibleStep) {
+                if (in_array($possibleStep, ['{{open_parenthesis}}', '{{close_parenthesis}}'])) {
+                    if ($possibleStep == '{{open_parenthesis}}')
+                        $autoStep = new OpenParenthesis();
+                    else
+                        $autoStep = new CloseParenthesis();
+                    $this->path->addPathStep($autoStep->getMapName(), $autoStep);
+                    $this->updateExpectedValues();
+                    $this->checkIsExpectedAndThrowError($step);
+                    break;
+                }
+            }
+        }
         $this->path->addPathStep($step, $value);
         $this->updateExpectedValues();
+        $this->autoStep();
+    }
+
+    private function autoStep()
+    {
+        if (count($this->expected) == 1) {
+            if (in_array($this->expected[0], ['{{open_parenthesis}}', '{{close_parenthesis}}'])) {
+                if ($this->expected[0] == '{{open_parenthesis}}')
+                    $autoStep = new OpenParenthesis();
+                else
+                    $autoStep = new CloseParenthesis();
+                $this->path->addPathStep($autoStep->getMapName(), $autoStep);
+                $this->updateExpectedValues();
+            }
+        }
     }
 
 
@@ -225,7 +316,10 @@ class QueryBuilder
     {
         if (!$this->isSequenceCanBeEnded())
             throw new QueryBuilderException('Can\'t be requested at this moment. Expected further steps: ' . implode(' ', $this->expected));
-        return new QueryResult($this->generateQueryString(), $this->mode);
+        $sql = $this->generateQueryString();
+        $mode = $this->mode;
+        $this->clear();
+        return new QueryResult($sql, $mode);
     }
 
     /**
@@ -251,7 +345,8 @@ class QueryBuilder
      */
     private function isSequenceCanBeEnded()
     {
-        return in_array(self::SEQUENCE_END_IDENTIFIER, $this->expected);
+        $this->autoStep();
+        return in_array(self::SEQUENCE_END_IDENTIFIER, $this->expected) or $this->expected == [];
     }
 
     /**
@@ -274,10 +369,23 @@ class QueryBuilder
         $this->expected = $this->MySQL->getExpected($this->path);
     }
 
+    /**
+     * @throws MySQLSyntaxException
+     */
     public function clear()
     {
         $this->path = new QueryPath();
         $this->MySQL = new MySQL();
         $this->updateExpectedValues();
+    }
+
+    /**
+     * @return Conditions
+     * @throws MySQLSyntaxException
+     */
+    public function createCondition()
+    {
+        $cond = new Conditions($this->mode);
+        return $cond;
     }
 }

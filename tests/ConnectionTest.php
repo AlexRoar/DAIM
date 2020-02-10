@@ -3,7 +3,8 @@
  * Designed and developed by Aleksandr Dremov
  * Use according to the license guidelines.
  * Contact me: dremov.me@gmail.com
- */ /** @noinspection PhpUnhandledExceptionInspection */
+ */
+/** @noinspection PhpUnhandledExceptionInspection */
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use DAIM\Core\Connection;
@@ -16,16 +17,19 @@ use PHPUnit\Framework\TestCase;
  */
 class ConnectionTest extends TestCase
 {
+    private $env = null;
 
-    private $host = '127.0.0.1';
-
-    private $username = 'test';
-
-    private $Dbname = 'daim';
-
-    private $password = 'qwerty123';
-
-    private $port = 3306;
+    public function __construct($name = null, array $data = [], $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+        $envVars = json_decode(file_get_contents(__DIR__ . '/environment.json'), true);
+        foreach ($envVars as $key => $value) {
+            $this->$key = $value;
+        }
+        foreach ($envVars['database'] as $key => $value) {
+            $this->$key = $value;
+        }
+    }
 
     /**
      *
@@ -35,7 +39,7 @@ class ConnectionTest extends TestCase
         $cred = new Credentials();
         $cred->setHost($this->host);
         $cred->setUsername($this->username);
-        $cred->setDbname($this->Dbname);
+        $cred->setDBname($this->DBname);
         $cred->setPassword($this->password);
         $cred->setPort($this->port);
         Connection::setCredentials($cred);
@@ -47,7 +51,7 @@ class ConnectionTest extends TestCase
         $cred = new Credentials();
         $cred->setHost($this->host);
         $cred->setUsername($this->username);
-        $cred->setDbname($this->Dbname);
+        $cred->setDBname($this->DBname);
         $cred->setPassword($this->password);
         $cred->setPort($this->port);
         Connection::setCredentials($cred);
@@ -63,7 +67,7 @@ class ConnectionTest extends TestCase
         $cred = new Credentials();
         $cred->setHost($this->host);
         $cred->setUsername($this->username . '_wrong_suffix'); # wrong
-        $cred->setDbname($this->Dbname);
+        $cred->setDBname($this->DBname);
         $cred->setPassword($this->password . '_wrong_suffix'); # wrong
         $cred->setPort($this->port);
         Connection::setCredentials($cred);
@@ -77,7 +81,7 @@ class ConnectionTest extends TestCase
         $cred = new Credentials();
         $cred->setHost($this->host);
         $cred->setUsername($this->username);
-        $cred->setDbname($this->Dbname);
+        $cred->setDBname($this->DBname);
         $cred->setPassword($this->password);
         $cred->setPort($this->port);
         Connection::setCredentials($cred);

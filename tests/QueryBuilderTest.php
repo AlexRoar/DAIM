@@ -9,6 +9,11 @@
 use DAIM\Core\Connection;
 use DAIM\Core\Credentials;
 use DAIM\Core\QueryBuilder;
+use DAIM\Exceptions\ConnectionException;
+use DAIM\Exceptions\CredentialsException;
+use DAIM\Exceptions\MySQLSyntaxException;
+use DAIM\Exceptions\QueryBuilderException;
+use DAIM\Exceptions\QueryPathException;
 use DAIM\Syntax\SQLEntities\Conditions;
 use PHPUnit\Framework\TestCase;
 
@@ -20,24 +25,40 @@ use PHPUnit\Framework\TestCase;
  */
 class QueryBuilderTest extends TestCase
 {
-    private $host = '127.0.0.1';
 
-    private $username = 'test';
-
-    private $Dbname = 'daim';
-
-    private $password = 'qwerty123';
-
-    private $port = 3306;
-
+    /**
+     * @var bool
+     */
     private $dbUpdated = false;
 
+    /**
+     * QueryBuilderTest constructor.
+     * @param null $name
+     * @param array $data
+     * @param string $dataName
+     */
+    public function __construct($name = null, array $data = [], $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+        $envVars = json_decode(file_get_contents(__DIR__ . '/environment.json'), true);
+        foreach ($envVars as $key => $value) {
+            $this->$key = $value;
+        }
+        foreach ($envVars['database'] as $key => $value) {
+            $this->$key = $value;
+        }
+    }
+
+    /**
+     * @throws ConnectionException
+     * @throws CredentialsException
+     */
     public function setUp()
     {
         $cred = new Credentials();
         $cred->setHost($this->host);
         $cred->setUsername($this->username);
-        $cred->setDbname($this->Dbname);
+        $cred->setDBname($this->DBname);
         $cred->setPassword($this->password);
         $cred->setPort($this->port);
         Connection::setCredentials($cred);
@@ -48,6 +69,14 @@ class QueryBuilderTest extends TestCase
         }
     }
 
+    /**
+     * @throws ReflectionException
+     * @throws ConnectionException
+     * @throws CredentialsException
+     * @throws MySQLSyntaxException
+     * @throws QueryBuilderException
+     * @throws QueryPathException
+     */
     public function testBuilderSelect()
     {
 
@@ -56,13 +85,15 @@ class QueryBuilderTest extends TestCase
 
         $qb = new QueryBuilder();
 
-        $cond = new Conditions();
-        $cond->field('LastName')->equal()->value('foo')->and()->field('PersonID')->equal()->value('1');
 
-        $qb->select()->all()->from()->tableName('Persons')->where()->conditions($cond);
+        $qb->select()->all()->from()->tableName('Persons')->where()->conditions(
+            $qb->createCondition()->field('LastName')->equal()->val('foo')->and()->field('PersonID')->equal()->val('1')
+        );
         $this->assertEquals($method->invokeArgs($qb, []), "SELECT * FROM Persons WHERE LastName = 'foo' AND PersonID = '1'");
 
         $qb->clear();
+        $cond = new Conditions();
+        $cond->field('LastName')->equal()->val('foo')->and()->field('PersonID')->equal('1');
 
         $qb->select()->star()->from()->tableName('Persons')->where()->conditions($cond);
         $this->assertEquals($method->invokeArgs($qb, []), "SELECT * FROM Persons WHERE LastName = 'foo' AND PersonID = '1'");
@@ -95,6 +126,64 @@ class QueryBuilderTest extends TestCase
         $this->assertEquals(
             $method->invokeArgs($qb, []),
             "SELECT Persons.LastName, Persons.PersonID, Information.Tel FROM Information, Persons WHERE Information.PersonID = Persons.PersonID");
+    }
+
+    public function testBuilderInsert()
+    {
+        $method = new ReflectionMethod('DAIM\Core\QueryBuilder', 'generateQueryString');
+        $method->setAccessible(true);
+
+        $qb = new QueryBuilder();
+        $response = $qb->select('*')
+            ->from('Persons')
+            ->where($qb->createCondition()->field('PersonID')->equal('1212'))->request();
+
+        $this->assertEquals(0, $response->getRowsNumber());
+        $qb = $qb->insertInto('Persons')->columns('PersonID', 'LastName', 'FirstName', 'Address', 'City');
+
+        $this->assertEquals($method->invokeArgs($qb, []), "INSERT INTO Persons ( PersonID, LastName, FirstName, Address, City )");
+
+        $qb = $qb->values(1212, "asf'", "Bad", "Nowhere", "Moscow");
+        $this->assertEquals($method->invokeArgs($qb, []), "INSERT INTO Persons ( PersonID, LastName, FirstName, Address, City ) VALUES ('1212', 'asf\'', 'Bad', 'Nowhere', 'Moscow')");
+        $qb->request();
+
+
+        $response = $qb->select('*')
+            ->from('Persons')
+            ->where($qb->createCondition()->field('PersonID')->equal('1212'))->request();
+        $values = $response->fetchAssoc();
+
+        $this->assertEquals(1, $response->getRowsNumber());
+        $this->assertEquals(1212, $values['PersonID']);
+        $this->assertEquals('asf\'', $values['LastName']);
+        $this->assertEquals('Bad', $values['FirstName']);
+        $this->assertEquals('Nowhere', $values['Address']);
+        $this->assertEquals('Moscow', $values['City']);
+    }
+
+    public function testBuilderInsertArray()
+    {
+        $qb = new QueryBuilder();
+
+        $response = $qb->insertInto('Persons', array(
+            'PersonID' => 1212,
+            'LastName' => 'asf\'',
+            'FirstName' => 'Bad',
+            'Address' => 'Nowhere',
+            'City' => 'Moscow'
+        ))->request();
+
+        $response = $qb->select('*')
+            ->from('Persons')
+            ->where($qb->createCondition()->field('PersonID')->equal('1212'))->request();
+        $values = $response->fetchAssoc();
+
+        $this->assertEquals(1, $response->getRowsNumber());
+        $this->assertEquals(1212, $values['PersonID']);
+        $this->assertEquals('asf\'', $values['LastName']);
+        $this->assertEquals('Bad', $values['FirstName']);
+        $this->assertEquals('Nowhere', $values['Address']);
+        $this->assertEquals('Moscow', $values['City']);
     }
 
 }

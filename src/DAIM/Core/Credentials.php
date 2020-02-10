@@ -78,7 +78,7 @@ class Credentials
     /**
      * @return string
      */
-    public function getDbname(): string
+    public function getDBname(): string
     {
         return $this->storage['dbname'];
     }
@@ -86,7 +86,7 @@ class Credentials
     /**
      * @param string $dbname
      */
-    public function setDbname($dbname): void
+    public function setDBname($dbname): void
     {
         $this->storage['dbname'] = $dbname;
     }

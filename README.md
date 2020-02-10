@@ -31,7 +31,7 @@ use DAIM\Core\Credentials;
 $cred = new Credentials();
 $cred->setHost(host);
 $cred->setUsername(username);
-$cred->setDbname(DBname);
+$cred->setDBname(DBname);
 $cred->setPassword(password);
 $cred->setPort(port);
 
