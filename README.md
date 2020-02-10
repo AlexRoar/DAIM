@@ -81,12 +81,13 @@ $result = $qb->select(
 INSERT:
 ```php
 use DAIM\Core\QueryBuilder;
+
 $qb = new QueryBuilder();
+
 $qb->insertInto('tableName', array(
 "field1"=>"value1",
 "field2"=>"value2"
 ));
-
 $response = $qb->request(); // Commit changes
 
 // Or longer version:
