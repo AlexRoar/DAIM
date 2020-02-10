@@ -56,10 +56,10 @@ Connection::query('SELECT * FROM `Persons` WHERE 1', "secondConnectionName");
 
 Currently, I am working on Query Builder. Some features are already available:
 
+SELECT:
 ```php
 use DAIM\Core\QueryBuilder;
 use DAIM\Syntax\SQLEntities\Conditions;
-
 $qb = new QueryBuilder();
 $result = $qb->select('*')->from('Information')->request();
 
@@ -78,5 +78,22 @@ $result = $qb->select(
 # SELECT Persons.LastName, Persons.PersonID, Information.Tel FROM Information, Persons WHERE Information.PersonID = Persons.PersonID
 # final ->request() returns instance of QueryResult class.
 ```
+INSERT:
+```php
+use DAIM\Core\QueryBuilder;
+$qb = new QueryBuilder();
+$qb->insertInto('tableName', array(
+"field1"=>"value1",
+"field2"=>"value2"
+));
+
+$response = $qb->request(); // Commit changes
+
+// Or longer version:
+
+$qb->insertInto('tableName')->columns('field1', 'field2', 'field3')->values('value1', 'value2', 'value3')->request();
+$qb->insertInto('tableName')->values('value1', 'value2', 'value3')->request();
+```
+Subqueries are also available in INSERT builder.
 
 Such limited library usage is due to the beta status of the project.
