@@ -128,6 +128,13 @@ class QueryBuilderTest extends TestCase
             "SELECT Persons.LastName, Persons.PersonID, Information.Tel FROM Information, Persons WHERE Information.PersonID = Persons.PersonID");
     }
 
+    /**
+     * @throws MySQLSyntaxException
+     * @throws QueryBuilderException
+     * @throws QueryPathException
+     * @throws ReflectionException
+     * @depends testBuilderSelect
+     */
     public function testBuilderInsert()
     {
         $method = new ReflectionMethod('DAIM\Core\QueryBuilder', 'generateQueryString');
@@ -161,6 +168,12 @@ class QueryBuilderTest extends TestCase
         $this->assertEquals('Moscow', $values['City']);
     }
 
+    /**
+     * @throws MySQLSyntaxException
+     * @throws QueryBuilderException
+     * @throws QueryPathException
+     * @depends testBuilderInsert
+     */
     public function testBuilderInsertArray()
     {
         $qb = new QueryBuilder();
@@ -184,6 +197,77 @@ class QueryBuilderTest extends TestCase
         $this->assertEquals('Bad', $values['FirstName']);
         $this->assertEquals('Nowhere', $values['Address']);
         $this->assertEquals('Moscow', $values['City']);
+    }
+
+    /**
+     * @throws MySQLSyntaxException
+     * @throws QueryBuilderException
+     * @throws QueryPathException
+     * @depends testBuilderInsert
+     */
+    public function testBuilderInsertMini()
+    {
+        $qb = new QueryBuilder();
+        $qb->insertInto('Persons')->values('1222', 'Dremov', 'Alex', 'Nowhere', 'Moscow')->request();
+
+        $response = $qb->select('*')
+            ->from('Persons')
+            ->where($qb->createCondition()->field('PersonID')->equal('1222'))->request();
+        $values = $response->fetchAssoc();
+
+        $this->assertEquals(1, $response->getRowsNumber());
+        $this->assertEquals(1222, $values['PersonID']);
+        $this->assertEquals('Dremov', $values['LastName']);
+        $this->assertEquals('Alex', $values['FirstName']);
+        $this->assertEquals('Nowhere', $values['Address']);
+        $this->assertEquals('Moscow', $values['City']);
+    }
+
+    /**
+     * @depends testBuilderInsert
+     * @depends testBuilderSelect
+     * @throws QueryPathException
+     * @throws MySQLSyntaxException
+     * @throws QueryBuilderException
+     */
+    public function testBuilderDeleteStatement()
+    {
+        $method = new ReflectionMethod('DAIM\Core\QueryBuilder', 'generateQueryString');
+        $method->setAccessible(true);
+
+        $qb = new QueryBuilder();
+        $qb->insertInto('Persons')->values('1222', 'Dremov', 'Alex', 'Nowhere', 'Moscow')->request();
+        $qb->insertInto('Persons')->values('1223', 'Dremov2', 'Alex2', 'Nowhere2', 'Moscow2')->request();
+
+        $response = $qb->select('*')
+            ->from('Persons')
+            ->where($qb->createCondition()->field('PersonID')->equal('1222'))->request();
+
+        $this->assertEquals(1, $response->getRowsNumber());
+
+        $response = $qb->select('*')
+            ->from('Persons')
+            ->where($qb->createCondition()->field('PersonID')->equal('1223'))->request();
+
+        $this->assertEquals(1, $response->getRowsNumber());
+
+        $qb->delete()->from('Persons')->where($qb->createCondition()->field('PersonID')->equal('1222'));
+
+        $this->assertEquals($method->invokeArgs($qb, []), "DELETE FROM Persons WHERE PersonID = '1222'");
+        $qb->request();
+
+
+        $response = $qb->select('*')
+            ->from('Persons')
+            ->where($qb->createCondition()->field('PersonID')->equal('1222'))->request();
+
+        $this->assertEquals(0, $response->getRowsNumber());
+
+        $response = $qb->select('*')
+            ->from('Persons')
+            ->where($qb->createCondition()->field('PersonID')->equal('1223'))->request();
+
+        $this->assertEquals(1, $response->getRowsNumber());
     }
 
 }

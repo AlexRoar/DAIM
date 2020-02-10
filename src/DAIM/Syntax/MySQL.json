@@ -21,7 +21,7 @@
       "{{table_name}}": {
         "set": {
           "{{column_value_groups}}": {
-            "where": "select/*/from/{{table_name_group}}/where"
+            "where": "/select/*/from/{{table_name_group}}/where"
           }
         }
       }
@@ -29,7 +29,7 @@
     "delete": {
       "from": {
         "{{table_name}}": {
-          "where": "select/*/from/{{table_name_group}}/where",
+          "where": "/select/*/from/{{table_name_group}}/where",
           "{{query_end}}": "{{query_end}}"
         }
       }

@@ -388,4 +388,16 @@ class QueryBuilder
         $cond = new Conditions($this->mode);
         return $cond;
     }
+
+
+    public function delete()
+    {
+        $this->makeStep(__FUNCTION__);
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->generateQueryString();
+    }
 }

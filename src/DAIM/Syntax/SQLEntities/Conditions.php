@@ -10,6 +10,7 @@ namespace DAIM\Syntax\SQLEntities;
 
 
 use DAIM\Core\Connection;
+use DAIM\Core\QueryBuilder;
 use DAIM\Exceptions\ConnectionException;
 use DAIM\Exceptions\CredentialsException;
 use DAIM\Exceptions\MySQLSyntaxException;
@@ -335,5 +336,11 @@ class Conditions implements BasicEntity
     public function __toString()
     {
         return $this->generateSQLString();
+    }
+
+    public function subQuery(QueryBuilder $query)
+    {
+        $this->sequence[] = $query;
+        return $this;
     }
 }
