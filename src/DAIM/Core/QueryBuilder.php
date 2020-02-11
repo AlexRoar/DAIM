@@ -84,7 +84,7 @@ class QueryBuilder
                 if ($range[0] == '*' or strtolower($range[0]) == 'all')
                     $this->makeStep('*');
                 else {
-                    $range = new ColumnNames($range[0]);
+                    $range = new ColumnNames([$range[0]]);
                     $this->makeStep($range->getMapName(), $range);
                 }
             } else {
@@ -238,7 +238,10 @@ class QueryBuilder
             $entitity = new ColumnNames($names);
             $this->makeStep($entitity->getMapName(), $entitity);
         } else {
-            $entitity = new ColumnNames($names[0]);
+            if (count($names) > 1)
+                $entitity = new ColumnNames($names);
+            else
+                $entitity = new ColumnNames($names[0]);
             $this->makeStep($entitity->getMapName(), $entitity);
         }
         return $this;

@@ -199,10 +199,19 @@ class Conditions implements BasicEntity
     /**
      *
      */
-    public function inList(array $list)
+    public function in(...$values)
     {
         $this->sequence[] = $this->logicOperators[__FUNCTION__];
-        $this->sequence[] = '(\'' . implode("','", $list) . '\')';
+        if (count($values) != 0) {
+            if (is_array($values[0])) {
+                $list = $values[0];
+                $this->sequence[] = '(\'' . implode("','", $list) . '\')';
+            } else if ($values[0] instanceof QueryBuilder) {
+                $this->sequence[] = '(\'' . (string)($values[0]) . '\')';
+            } else {
+                $this->sequence[] = '(\'' . implode("','", $values) . '\')';
+            }
+        }
         return $this;
     }
 
@@ -340,7 +349,14 @@ class Conditions implements BasicEntity
 
     public function subQuery(QueryBuilder $query)
     {
+        $this->sequence[] = '(';
         $this->sequence[] = $query;
+        $this->sequence[] = ')';
         return $this;
+    }
+
+    public function createSubQuery()
+    {
+        return new QueryBuilder();
     }
 }

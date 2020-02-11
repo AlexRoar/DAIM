@@ -126,6 +126,14 @@ class QueryBuilderTest extends TestCase
         $this->assertEquals(
             $method->invokeArgs($qb, []),
             "SELECT Persons.LastName, Persons.PersonID, Information.Tel FROM Information, Persons WHERE Information.PersonID = Persons.PersonID");
+
+        $qb->clear();
+
+        $response = $qb->select('PersonID', 'LastName')->from('Persons')->where(
+            $qb->createCondition()->true()
+        )->request();
+
+        $this->assertEquals(2, $response->getRowsNumber());
     }
 
     /**

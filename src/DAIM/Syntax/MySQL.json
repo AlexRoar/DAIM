@@ -74,7 +74,7 @@
     "equalNull": "IS NULL",
     "notEqualNull": "IS NOT NULL",
     "between": "BETWEEN",
-    "inList": "IN",
+    "in": "IN",
     "like": "LIKE",
     "exists": "EXISTS"
   },
