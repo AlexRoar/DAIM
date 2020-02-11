@@ -21,7 +21,7 @@ Just use [composer](https://getcomposer.org).
 composer require alexdremov/daim
 ```
 
-## Beta: what's ready?
+## Usage
 
 You can use it for keeping your Database connections organized and single.
 At first, you need to setup the framework:
@@ -59,7 +59,7 @@ Now we are ready to go.
 Connection::query('SELECT * FROM `Persons` WHERE 1', "secondConnectionName");
 ```
 
-Currently, I am working on Query Builder. Some features are already available:
+Currently, I am working on Query Builder. The project's state is beta, but some features are already available:
 
 SELECT:
 ```php
