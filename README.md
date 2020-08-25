@@ -4,13 +4,13 @@
 ![](https://img.shields.io/github/repo-size/AlexRoar/DAIM)
 ![](https://img.shields.io/github/last-commit/AlexRoar/DAIM)
 
-The framework is designed to minimize usage of SQL code in interactions between MySQL server and PHP scripts and to bind PHP object alterations with DB alterations.
+The framework is designed to minimize usage of SQL code in interactions between MySQL server and PHP scripts; to bind PHP object alterations with DB alterations.
 
 ## Why it is gorgeous?
 
-- Database reactive tables models. You change PHP model — Database changes automatically.
+- Reactive models. You change PHP model — Database changes automatically.
 - Generates PHP classes according to existing tables, helps your IDE with suggestions.
-- Keeps connections efficient, uses only one active MySQL connection through whole request.
+- Keeps connections efficient, as it uses only one active MySQL connection throughout all interactions.
 - Keeps connections to multiple databases organized.
 - Automatic prevention of SQL-injections.
 
